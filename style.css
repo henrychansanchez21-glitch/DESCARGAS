@@ -1,382 +1,243 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap');
-
+/*
+  ESTILOS GENERALES Y RESET BÁSICO
+*/
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  background: radial-gradient(circle at center, #000000 40%, #020a18 100%);
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  overflow-x: hidden;
-  position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f9; /* Fondo gris muy claro */
+    color: #333;
+    line-height: 1.6;
 }
 
-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(10px);
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  border-bottom: 2px solid #00aaff;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #007aff; /* Azul de acento */
+}
+
+ul {
+    list-style: none;
+}
+
+/*
+  1. ENCABEZADO
+*/
+.main-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
+    font-size: 1.8em;
+    color: #2c3e50;
 }
 
-.logo img {
-  width: 40px;
-  margin-right: 10px;
+.search-bar input {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px 0 0 20px;
+    outline: none;
+    width: 250px;
 }
 
-.logo h1 {
-  font-family: 'Orbitron', sans-serif;
-  color: #00aaff;
-  letter-spacing: 2px;
+.search-bar button {
+    padding: 8px 15px;
+    background-color: #007aff; 
+    color: white;
+    border: none;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+    margin-left: -1px; /* Para que parezca un solo elemento */
 }
 
-nav a {
-  text-decoration: none;
-  color: #fff;
-  margin: 0 15px;
-  font-weight: 500;
-  transition: color 0.3s;
+/*
+  2. NAVEGACIÓN
+*/
+.main-nav {
+    background-color: #34495e; /* Azul oscuro */
+    padding: 10px 0;
 }
 
-nav a:hover {
-  color: #00ffff;
-}
-
-.hero {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: url('https://i.imgur.com/7JpABJo.jpg') center/cover no-repeat;
-  position: relative;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 700px;
-  padding: 20px;
-}
-
-.hero-content h2 {
-  font-size: 3em;
-  font-family: 'Orbitron', sans-serif;
-  text-shadow: 0 0 25px #00aaff;
-  color: #fff;
-  animation: pulse 3s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { text-shadow: 0 0 15px #00ffff; }
-  50% { text-shadow: 0 0 35px #00ffff; }
-}
-
-.hero-content p {
-  margin: 20px 0;
-  font-size: 1.1em;
-  color: #ddd;
-}
-
-.btn {
-  display: inline-block;
-  padding: 12px 30px;
-  background: linear-gradient(45deg, #007bff, #00ffff);
-  color: #000;
-  border-radius: 30px;
-  font-weight: 700;
-  box-shadow: 0 0 20px #00aaff;
-  text-decoration: none;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 40px #00ffff;
-}
-
-section {
-  padding: 100px 10%;
-  position: relative;
-}
-
-h2 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2em;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #00ffff;
-  text-shadow: 0 0 15px #00aaff;
-}
-
-.descripcion p {
-  max-width: 800px;
-  margin: auto;
-  text-align: center;
-  line-height: 1.8;
-  color: #ddd;
-}
-
-.descripcion ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 30px;
-}
-
-.descripcion li {
-  list-style: none;
-  margin: 10px 20px;
-  font-size: 1.1em;
-  color: #fff;
-}
-
-.descripcion i {
-  color: #00ffff;
-  margin-right: 8px;
-}
-
-.trailer .video-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-}
-
-.trailer iframe {
-  border: 2px solid #00aaff;
-  border-radius: 10px;
-  box-shadow: 0 0 25px #00aaff;
-}
-
-.galeria .imagenes {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 30px;
-}
-
-.galeria img {
-  width: 300px;
-  border-radius: 15px;
-  border: 2px solid #00aaff;
-  transition: transform 0.4s, box-shadow 0.4s;
-}
-
-.galeria img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px #00ffff;
-}
-
-.requisitos ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.requisitos li {
-  font-size: 1.1em;
-  color: #fff;
-}
-
-.requisitos i {
-  color: #00ffff;
-  margin-right: 10px;
-}
-
-.opiniones .comentarios {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #00aaff;
-  border-radius: 15px;
-  padding: 20px;
-  width: 300px;
-  text-align: center;
-  box-shadow: 0 0 10px #00aaff33;
-  transition: transform 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 0 25px #00ffff66;
-}
-
-.card p {
-  font-size: 1em;
-  color: #fff;
-  margin-bottom: 10px;
-}
-
-.card span {
-  font-size: 0.9em;
-  color: #00ffff;
-}
-
-/* Descargar */
-.descargar {
-  text-align: center;
-}
-
-.botones {
-  margin-top: 20px;
-}
-
-.botones .btn {
-  margin: 10px;
-}
-
-footer {
-  background: rgba(0, 0, 0, 0.8);
-  text-align: center;
-  padding: 20px;
-  border-top: 2px solid #00aaff;
-  font-size: 0.9em;
-  color: #aaa;
-}
-
-#particles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
-}
-
-@media (max-width: 768px) {
-  .hero-content h2 {
-    font-size: 2em;
-  }
-
-  .galeria img {
-    width: 90%;
-  }
-
-  header {
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  nav {
+.main-nav ul {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-  }
-
-  nav a {
-    margin: 8px;
-  }
 }
 
-#intro-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, #000000 60%, #001f33 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  flex-direction: column;
-  animation: fadeIn 1s ease-in-out;
+.main-nav li a {
+    color: white;
+    padding: 10px 20px;
+    display: block;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-.intro-box {
-  text-align: center;
-  animation: popIn 1s ease;
+.main-nav li a:hover,
+.main-nav li a.active {
+    background-color: #2c3e50;
 }
 
-.intro-logo {
-  width: 120px;
-  filter: drop-shadow(0 0 25px #00ffff);
-  animation: glow 3s infinite alternate;
+/*
+  3. CONTENIDO MAIN - APLICACIONES
+*/
+.app-section {
+    padding: 30px 0;
 }
 
-#intro-overlay h2 {
-  margin-top: 20px;
-  font-family: 'Orbitron', sans-serif;
-  color: #00ffff;
-  text-shadow: 0 0 20px #00ffff;
-  animation: flicker 3s infinite;
+.app-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
 }
 
-#intro-overlay p {
-  color: #aaa;
-  margin-top: 10px;
-  font-size: 0.95em;
+/* Diseño de cuadrícula para las apps */
+.grid-view {
+    display: grid;
+    /* 4 columnas en escritorio, adaptándose a 2 en dispositivos más pequeños */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    gap: 25px;
 }
 
-#enter-btn {
-  margin-top: 25px;
-  background: linear-gradient(45deg, #00ffff, #007bff);
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 0 25px #00ffff;
-  font-size: 1em;
+/* Estilos de la Tarjeta de Aplicación (App Card) */
+.app-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil para destacar */
+    text-align: center;
+    transition: transform 0.3s;
 }
 
-@keyframes popIn {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+.app-card:hover {
+    transform: translateY(-5px); /* Pequeño efecto al pasar el ratón */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
-@keyframes glow {
-  0% { filter: drop-shadow(0 0 5px #00ffff); }
-  100% { filter: drop-shadow(0 0 25px #00ffff); }
+.app-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 20%; /* Icono con esquinas redondeadas */
+    margin-bottom: 10px;
 }
 
-@keyframes flicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-    opacity: 1;
-  }
-  20%, 24%, 55% {
-    opacity: 0.4;
-  }
+.app-card h3 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #2c3e50;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.app-card .category {
+    font-size: 0.9em;
+    color: #7f8c8d;
+    margin-bottom: 10px;
 }
 
-.fade-out {
-  animation: fadeOut 1s forwards;
+.app-card .details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
 }
 
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; visibility: hidden; }
+.app-card .rating {
+    font-weight: bold;
+    color: #f39c12; /* Color para las estrellas */
+}
+
+.download-btn {
+    background-color: #2ecc71; /* Verde para el botón de acción */
+    color: white;
+    padding: 8px 15px;
+    border-radius: 25px; /* Botón tipo "píldora" */
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #27ae60;
+}
+
+/*
+  4. PIE DE PÁGINA
+*/
+footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 30px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Para que se adapte en móviles */
+}
+
+.footer-links li {
+    display: inline;
+    margin-left: 20px;
+}
+
+.footer-links a {
+    color: #bdc3c7;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+}
+
+/*
+  RESPONSIVE BÁSICO (Para móviles)
+*/
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .search-bar {
+        width: 100%;
+        margin-top: 15px;
+    }
+    .search-bar input {
+        width: calc(100% - 40px); /* Ajuste para el botón */
+    }
+    .main-nav ul {
+        flex-wrap: wrap;
+        padding: 0 10px;
+    }
+    .main-nav li {
+        margin: 5px;
+    }
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-links {
+        margin-top: 15px;
+    }
+    .footer-links li {
+        margin: 0 10px;
+    }
 }
