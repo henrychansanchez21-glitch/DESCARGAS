@@ -12,12 +12,16 @@ body {
     background-color: #f4f7f9; /* Fondo gris muy claro */
     color: #333;
     line-height: 1.6;
+    min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura */
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
 }
 
 a {
@@ -30,11 +34,12 @@ ul {
 }
 
 /*
-  1. ENCABEZADO
+  1. ENCABEZADO Y BÚSQUEDA
 */
 .main-header {
     background-color: #ffffff;
     border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     padding: 15px 0;
 }
 
@@ -42,32 +47,46 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
 }
 
 .logo {
     font-size: 1.8em;
     color: #2c3e50;
+    font-weight: 700;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
 }
 
 .search-bar input {
-    padding: 8px 15px;
+    padding: 10px 20px;
     border: 1px solid #ccc;
-    border-radius: 20px 0 0 20px;
+    border-radius: 25px 0 0 25px;
     outline: none;
-    width: 250px;
+    width: 300px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.search-bar input:focus {
+    border-color: #007aff;
 }
 
 .search-bar button {
-    padding: 8px 15px;
+    padding: 10px 15px;
     background-color: #007aff; 
     color: white;
     border: none;
-    border-radius: 0 20px 20px 0;
+    border-radius: 0 25px 25px 0;
     cursor: pointer;
-    margin-left: -1px; /* Para que parezca un solo elemento */
+    margin-left: -1px; 
+    transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+    background-color: #005bb5;
 }
 
 /*
@@ -81,74 +100,81 @@ ul {
 .main-nav ul {
     display: flex;
     justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .main-nav li a {
     color: white;
-    padding: 10px 20px;
+    padding: 10px 18px;
     display: block;
     border-radius: 5px;
     transition: background-color 0.3s;
+    font-weight: 500;
 }
 
 .main-nav li a:hover,
 .main-nav li a.active {
-    background-color: #2c3e50;
+    background-color: #007aff;
 }
 
 /*
-  3. CONTENIDO MAIN - APLICACIONES
+  3. CONTENIDO PRINCIPAL Y TARJETAS
 */
+main {
+    flex-grow: 1; /* Permite que el contenido principal ocupe el espacio restante */
+}
+
 .app-section {
     padding: 30px 0;
 }
 
 .app-section h2 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 5px;
+    font-size: 1.7em;
+    margin-bottom: 25px;
+    color: #2c3e50;
 }
 
-/* Diseño de cuadrícula para las apps */
 .grid-view {
     display: grid;
-    /* 4 columnas en escritorio, adaptándose a 2 en dispositivos más pequeños */
+    /* Configura las columnas: mín. 220px de ancho para la card */
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-    gap: 25px;
+    gap: 30px;
 }
 
 /* Estilos de la Tarjeta de Aplicación (App Card) */
 .app-card {
     background-color: #ffffff;
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil para destacar */
+    border-radius: 16px; /* Bordes más pronunciados */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); /* Sombra más visible */
     text-align: center;
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden; /* Importante para bordes redondeados */
 }
 
 .app-card:hover {
-    transform: translateY(-5px); /* Pequeño efecto al pasar el ratón */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px); 
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
 
 .app-card img {
-    width: 80px;
-    height: 80px;
-    border-radius: 20%; /* Icono con esquinas redondeadas */
-    margin-bottom: 10px;
+    width: 90px;
+    height: 90px;
+    border-radius: 22%; /* Esquinas redondeadas como iconos de apps */
+    margin-bottom: 15px;
+    object-fit: cover;
 }
 
 .app-card h3 {
-    font-size: 1.2em;
+    font-size: 1.3em;
     margin-bottom: 5px;
-    color: #2c3e50;
+    color: #34495e;
 }
 
 .app-card .category {
     font-size: 0.9em;
-    color: #7f8c8d;
+    color: #95a5a6;
     margin-bottom: 10px;
 }
 
@@ -157,19 +183,21 @@ ul {
     justify-content: space-between;
     align-items: center;
     margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #ecf0f1;
 }
 
 .app-card .rating {
-    font-weight: bold;
-    color: #f39c12; /* Color para las estrellas */
+    font-weight: 600;
+    color: #f39c12; 
 }
 
 .download-btn {
-    background-color: #2ecc71; /* Verde para el botón de acción */
+    background-color: #2ecc71; /* Verde esmeralda para acción de descarga */
     color: white;
-    padding: 8px 15px;
-    border-radius: 25px; /* Botón tipo "píldora" */
-    font-weight: bold;
+    padding: 8px 18px;
+    border-radius: 25px; 
+    font-weight: 600;
     transition: background-color 0.3s;
 }
 
@@ -184,24 +212,23 @@ footer {
     background-color: #2c3e50;
     color: white;
     padding: 30px 0;
-    margin-top: 40px;
+    margin-top: auto; /* Empuja el footer al fondo */
 }
 
 .footer-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Para que se adapte en móviles */
+    flex-wrap: wrap; 
 }
 
 .footer-links li {
     display: inline;
-    margin-left: 20px;
+    margin-left: 25px;
 }
 
 .footer-links a {
     color: #bdc3c7;
-    transition: color 0.3s;
 }
 
 .footer-links a:hover {
@@ -209,26 +236,30 @@ footer {
 }
 
 /*
-  RESPONSIVE BÁSICO (Para móviles)
+  RESPONSIVE (Ajustes para dispositivos pequeños)
 */
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
-        text-align: center;
+        gap: 15px;
     }
     .search-bar {
         width: 100%;
-        margin-top: 15px;
     }
     .search-bar input {
-        width: calc(100% - 40px); /* Ajuste para el botón */
+        width: calc(100% - 60px); 
     }
     .main-nav ul {
         flex-wrap: wrap;
+        justify-content: flex-start;
         padding: 0 10px;
     }
     .main-nav li {
         margin: 5px;
+    }
+    .grid-view {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* 2 columnas en móvil */
+        gap: 20px;
     }
     .footer-content {
         flex-direction: column;
