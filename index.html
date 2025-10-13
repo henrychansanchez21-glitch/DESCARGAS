@@ -3,112 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Grupo H - Tienda de Aplicaciones Interactiva</title>
-    <link rel="stylesheet" href="style.css"> 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Alerta de Actualización Web (Sencilla)</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-    <header class="main-header">
-        <div class="container header-content">
-            <h1 class="logo">App Grupo H <span class="pro-text">+</span></h1>
-            <a href="#" class="profile-btn"><i class="fas fa-circle" style="color: #FFAF4C4C;"></i> Estatus ON</a>
-        </div>
+
+    <header>
+        <h1>Web en Actualización</h1>
+        <p>En los Proximos minos podras ver lo nuevo para ti!</p>
     </header>
 
-    <main class="container">
-        
-        <section class="hero-banner" onmousemove="handleParallax(event)">
-            <div class="carousel premium-card">
-                <div class="banner-text">
-                    <h2>🚀 El Futuro está en App Grupo H</h2>
-                    <p>Descubre las mejores aplicaciones y archivos con con la mejor aplicación de descargas .</p>
-                </div>
-                <div class="parallax-layer"></div>
-            </div>
-        </section>
-
-        <nav class="main-categories">
-            <ul>
-                <li><a href="#" class="category-link active" data-category="all">Todos</a></li>
-            </ul>
-        </nav>
-
-        <section class="app-section top-charts">
-            <h2>📤ACTUALIZACIONES📤</h2>
-            <div class="app-list grid-view" id="app-results">
-                
-                <article class="app-card animated-hover" data-category="productivity" data-name="Productivity Master">
-                    <img src="https://via.placeholder.com/120x120/5e35b1/ffffff?text=P" alt="Icono de App" class="interactive-icon">
-                    <div class="app-info">
-                        <h3>HOLOGRAMA RGB</h3>
-                        <p class="developer">Mira a tus enemigos.</p>
-                        <div class="rating"><span>⭐️ 4.9</span> (12k)</div>
-                    </div>
-                    <div class="hover-detail">
-                        <p>¡Pruébalo ahora!</p>
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <a href="#" class="download-btn" data-type="free">Descargar</a>
-                </article>
-
-                <article class="app-card animated-hover" data-category="games" data-name="Galaxy Runner X">
-                    <img src="https://via.placeholder.com/120x120/e53935/ffffff?text=G" alt="Icono de Juego" class="interactive-icon">
-                    <div class="app-info">
-                        <h3>FAKE LAG MOBILE</h3>
-                        <p class="developer">Paraliza a tus enemigos</p>
-                        <div class="rating"><span>⭐️ 4.5</span> (30k)</div>
-                    </div>
-                    <div class="hover-detail">
-                        <p>Congelalos y matalos ya!.</p>
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <a href="#" class="download-btn" data-type="paid">Descargar</a>
-                </article>
-                
-                <article class="app-card animated-hover" data-category="design" data-name="Design Flow Pro">
-                    <img src="https://via.placeholder.com/120x120/1e88e5/ffffff?text=D" alt="Icono de Diseño" class="interactive-icon">
-                    <div class="app-info">
-                        <h3>DELTA FORCE</h3>
-                        <p class="developer">FUERA DE SERVICO</p>
-                        <div class="rating"><span>⭐️ 4.7</span> (8k)</div>
-                    </div>
-                    <div class="hover-detail">
-                        <p>Ejecutador de Scripts para Roblox Mobile.</p>
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <a href="#" class="download-btn" data-type="free">Descargar</a>
-                </article>
-                
-                <article class="app-card animated-hover" data-category="productivity" data-name="Task Manager 360">
-                    <img src="https://via.placeholder.com/120x120/43a047/ffffff?text=T" alt="Icono de Tareas" class="interactive-icon">
-                    <div class="app-info">
-                        <h3>SCRIPTS ROBA UN BRAINROT</h3>
-                        <p class="developer">FUERA DE SERVICIO</p>
-                        <div class="rating"><span>⭐️ 4.6</span> (25k)</div>
-                    </div>
-                    <div class="hover-detail">
-                        <p>Roba con ventajas a hora!!.</p>
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <a href="#" class="download-btn" data-type="paid">Descargar</a>
-                </article>
-
-            </div>
-        </section>
-
+    <main>
+        <p>En esta vercion se tratara de mejorar la pagina principal.</p>
+        <p>En esta vercion se tratara de inplementar nuevas opciones y archivos como apps.</p>
     </main>
+    
 
-    <footer>
-        <div class="container footer-content">
-            <p>&copy; 2025 AppGrupo H.</p>
-            <ul class="footer-links">
-                <li><a href="#">Telegram</a></li>
-                <li><a href="#">Grupo Oficial</a></li>
-            </ul>
+    <div id="updateModal" class="modal-overlay">
+        <div class="modal-card">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header">
+                <div class="update-icon-circle">
+                    <span class="icon-text">🎉</span>
+                </div>
+                <h2>¡Web Actualizada!</h2>
+            </div>
+            <div class="modal-body">
+                <p>Se ha implementado una nueva **actuación/actualización** en la plataforma.</p>
+                <p>Disfruta de la nueva versión con mejor rendimiento y nuevas funcionalidades.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="understoodBtn" class="action-btn primary-btn">Entendido</button>
+            </div>
         </div>
-    </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
