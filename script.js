@@ -1,65 +1,84 @@
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Asignar un retraso de animación escalonado al cargar
+    const appCards = document.querySelectorAll('.app-card');
+    appCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+    });
 
-const particlesArray = [];
+    // 1. Manejo de Filtros por Categoría (Interactividad en la navegación)
+    const categoryLinks = document.querySelectorAll('.category-link');
+    const appListContainer = document.getElementById('app-results');
 
-class Particle {
-  constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 2 + 1;
-    this.speedX = Math.random() * 0.5 - 0.25;
-    this.speedY = Math.random() * 0.5 - 0.25;
-  }
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const filter = e.target.dataset.category;
+
+            // 1.1 Actualiza la clase activa
+            categoryLinks.forEach(l => l.classList.remove('active'));
+            e.target.classList.add('active');
+
+            // 1.2 Filtra las tarjetas con animación
+            // Creamos un array temporal para reordenar y aplicar animación
+            const cardsArray = Array.from(appCards);
+            
+            cardsArray.forEach(card => {
+                const category = card.dataset.category;
+                const shouldShow = filter === 'all' || category === filter || (filter === 'free' && card.dataset.type === 'free');
+                
+                if (shouldShow) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Re-aplica la animación de entrada a los elementos visibles
+            // Esto le da el efecto "pop-in" al cambiar de categoría
+            const visibleCards = appListContainer.querySelectorAll('.app-card[style*="display: flex"]');
+            visibleCards.forEach((card, index) => {
+                card.style.animation = 'none'; // Resetea la animación
+                void card.offsetWidth; // Truco para forzar el reinicio de la animación
+                card.style.animation = `fadeIn 0.5s ease forwards`;
+                card.style.animationDelay = `${index * 0.05}s`;
+            });
+        });
+    });
+});
+
+// 2. Función de búsqueda en tiempo real (llamada desde el input HTML)
+function filterApps() {
+    const searchTerm = document.getElementById('app-search').value.toLowerCase().trim();
+    const appCards = document.querySelectorAll('.app-card');
+    
+    appCards.forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        
+        if (name.includes(searchTerm)) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+
+// 3. Efecto Parallax en el Banner (Movimiento sutil del fondo)
+function handleParallax(e) {
+    const banner = document.querySelector('.premium-card');
+    const layer = document.querySelector('.parallax-layer');
+    
+    if (layer) {
+        const rect = banner.getBoundingClientRect();
+        // Normaliza las coordenadas del ratón a un rango de 0 a 1
+        const offsetX = (e.clientX - rect.left) / rect.width;
+        const offsetY = (e.clientY - rect.top) / rect.height;
+
+        // Calcula el movimiento (máximo 10px)
+        const moveX = (offsetX - 0.5) * -10; 
+        const moveY = (offsetY - 0.5) * -10;
+
+        layer.style.transform = `translate(${moveX}px, ${moveY}px)`;
     }
-  }
-  draw() {
-    ctx.fillStyle = "rgba(0,255,255,0.5)";
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
 }
-
-function initParticles() {
-  for (let i = 0; i < 120; i++) {
-    particlesArray.push(new Particle());
-  }
-}
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particlesArray.forEach(p => {
-    p.update();
-    p.draw();
-  });
-  requestAnimationFrame(animate);
-}
-
-initParticles();
-animate();
-
-window.addEventListener("resize", () => {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const intro = document.getElementById("intro-overlay");
-  const enterBtn = document.getElementById("enter-btn");
-
-  enterBtn.addEventListener("click", () => {
-    intro.classList.add("fade-out");
-    setTimeout(() => {
-      intro.style.display = "none";
-    }, 1000);
-  });
-});
