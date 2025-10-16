@@ -1,79 +1,138 @@
-/* Estilos para el cuerpo de la página (solo demostración) */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding-top: 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
-/* ------------------------------------------------------------------ */
-/* Estilos del Modal/Alerta */
-/* ------------------------------------------------------------------ */
-
-/* El fondo del modal (oscurece el resto de la página) */
-.modal {
-    display: none; /* Por defecto estará oculto (el JS lo mostrará) */
-    position: fixed; /* Se superpone a todo */
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+/* Estilos del modal y su fondo */
+#update-modal {
+    position: fixed;
+    z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%; /* Cubre todo el ancho */
-    height: 100%; /* Cubre todo el alto */
-    overflow: auto; /* Permite scroll si el contenido es grande */
-    background-color: rgba(0,0,0,0.6); /* Fondo semi-transparente oscuro */
-    backdrop-filter: blur(3px); /* Efecto de desenfoque sutil (opcional) */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Empieza oculto para la animación */
+    visibility: hidden; /* Asegura que no sea interactivo cuando oculto */
+    transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
-/* El contenido de la caja de la alerta */
+/* Ocultar el modal por defecto */
+.modal-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Mostrar el modal */
+.modal-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Contenido interno del modal */
 .modal-content {
-    background-color: #ffffff;
-    margin: 15% auto; /* 15% arriba y centrado horizontalmente */
+    background: linear-gradient(135deg, #ffffff, #f0f8ff); /* Fondo degradado sutil */
     padding: 30px;
-    border: 1px solid #888;
-    width: 80%; /* Ancho general */
-    max-width: 500px; /* Ancho máximo para pantallas grandes */
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    text-align: left;
-    position: relative;
-    animation-name: animatetop;
-    animation-duration: 0.4s
+    border-radius: 15px; /* Bordes más suaves */
+    width: 90%;
+    max-width: 450px; /* Un poco más ancho */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+    text-align: center;
+    transform: translateY(-20px); /* Para la animación de entrada */
+    transition: transform 0.4s ease;
+    position: relative; /* Para el botón de cierre superior */
 }
 
-/* Animación para que aparezca desde arriba */
-@keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
+.modal-visible .modal-content {
+    transform: translateY(0); /* Posición final de la animación */
 }
 
-/* Botón de cerrar (la 'X') */
-.close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+.icon-container {
+    font-size: 60px; /* Icono grande y llamativo */
+    margin-bottom: 15px;
+    line-height: 1; /* Para centrar bien el emoji */
 }
 
-.close-button:hover,
-.close-button:focus {
-    color: #000;
-    text-decoration: none;
+h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 26px; /* Título más grande */
+    font-weight: 700;
 }
 
-/* Estilo del botón "Entendido" */
-#btnAceptar {
-    background-color: #007bff; /* Azul primario */
+p {
+    color: #555;
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+/* Estilos de botones */
+.primary-btn {
+    background: linear-gradient(45deg, #007bff, #0056b3); /* Degradado en el botón principal */
     color: white;
-    padding: 10px 20px;
     border: none;
-    border-radius: 6px;
+    padding: 12px 25px; /* Más padding */
+    border-radius: 30px; /* Botones más redondeados (pastilla) */
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 17px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* Sombra para el botón */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: #6c757d;
+    border: 1px solid #dcdcdc; /* Borde más sutil */
+    margin-left: 12px;
+    padding: 12px 25px;
+    border-radius: 30px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 15px;
-    display: block;
-    width: 100%;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-#btnAceptar:hover {
-    background-color: #0056b3;
+.secondary-btn:hover {
+    background-color: #f0f0f0;
+    color: #495057;
+}
+
+/* Botón de cierre en la esquina superior */
+.close-button-top {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    line-height: 1; /* Para evitar que afecte el tamaño del icono */
+}
+
+.close-button-top:hover {
+    color: #777;
+}
+
+/* Estilo para la versión actual (solo para ejemplo) */
+#current-version {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 14px;
+    color: #888;
 }

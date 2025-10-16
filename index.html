@@ -3,24 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alerta de Actuación</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Alerta de Actualización</title>
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
 
-    <h1>Mi Aplicación</h1>
-    <p>Este es el contenido principal de la web. La alerta aparecerá por encima.</p>
-
-    <div id="alertaActuacion" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>🚨 ¡Importante! Actuación de la Aplicación</h2>
-            <p>Se ha implementado una nueva **actualización** con mejoras de rendimiento y nuevas funcionalidades.</p>
-            <p>Por favor, recarga la página o el cache de tu navegador si experimentas problemas. ¡Gracias!</p>
-            <button id="btnAceptar">Entendido</button>
-        </div>
+<div id="update-modal" class="modal-hidden">
+    <div class="modal-content">
+        <span class="close-button-top" id="close-button-top">&times;</span>
+        <div class="icon-container">🎉</div> 
+        <h2>¡Noticias Geniales! ¡Nueva Versión Lista!</h2>
+        <p>Tenemos una actualización emocionante esperando por ti. Descubre las últimas mejoras, funciones nuevas y un rendimiento aún mejor. ¡No te lo pierdas!</p>
+        <button id="update-button" class="primary-btn">¡Actualizar y Disfrutar! ✨</button>
+        <button id="close-button" class="secondary-btn">Luego, ¡Gracias!</button>
     </div>
+</div>
 
-    <script src="script.js"></script>
+<p id="current-version"></p>
+
+<script>
+    // Tu código JavaScript debe ir aquí o enlazado desde un archivo externo.
+    // Usaremos el JS que te di en el ejemplo anterior.
+    document.addEventListener('DOMContentLoaded', () => {
+        const REQUIRED_APP_VERSION = "1.1.0"; 
+        const LOCAL_APP_VERSION = "1.0.5";   
+
+        document.getElementById('current-version').textContent = `Versión actual: ${LOCAL_APP_VERSION}`;
+
+        const modal = document.getElementById('update-modal');
+        const updateButton = document.getElementById('update-button');
+        const closeButton = document.getElementById('close-button');
+        const closeButtonTop = document.getElementById('close-button-top'); 
+
+        function showModal() {
+            modal.classList.add('modal-visible');
+            modal.classList.remove('modal-hidden');
+        }
+
+        function hideModal() {
+            modal.classList.remove('modal-visible');
+            modal.classList.add('modal-hidden'); 
+        }
+
+        function checkForUpdate() {
+            if (LOCAL_APP_VERSION < REQUIRED_APP_VERSION) {
+                showModal();
+            } else {
+                hideModal(); 
+            }
+        }
+
+        updateButton.addEventListener('click', () => {
+            alert('¡Genial! La aplicación se actualizará. Prepara tus marcadores y caché si es necesario.');
+            localStorage.clear();
+            window.location.href = window.location.href;
+        });
+
+        closeButton.addEventListener('click', hideModal); 
+        closeButtonTop.addEventListener('click', hideModal); 
+
+        checkForUpdate();
+    });
+</script>
 </body>
 </html>
