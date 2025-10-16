@@ -3,38 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alerta de Actualización Web (Sencilla)</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Alerta de Actuación</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <header>
-        <h1>Web en Actualización</h1>
-        <p>En los Proximos minutos podras ver lo nuevo para ti!</p>
-    </header>
+    <h1>Mi Aplicación</h1>
+    <p>Este es el contenido principal de la web. La alerta aparecerá por encima.</p>
 
-    <main>
-        <p>En esta vercion se tratara de mejorar la pagina principal.</p>
-        <p>En esta vercion se tratara de inplementar nuevas opciones y archivos como apps.</p>
-    </main>
-    
-
-    <div id="updateModal" class="modal-overlay">
-        <div class="modal-card">
-            <button class="close-btn">&times;</button>
-            <div class="modal-header">
-                <div class="update-icon-circle">
-                    <span class="icon-text">🎉</span>
-                </div>
-                <h2>¡Web Actualizada!</h2>
-            </div>
-            <div class="modal-body">
-                <p>Se ha implementado una nueva **actuación/actualización** en la plataforma.</p>
-                <p>Disfruta de la nueva versión con mejor rendimiento y nuevas funcionalidades.</p>
-            </div>
-            <div class="modal-footer">
-                <button id="understoodBtn" class="action-btn primary-btn">Entendido</button>
-            </div>
+    <div id="alertaActuacion" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>🚨 ¡Importante! Actuación de la Aplicación</h2>
+            <p>Se ha implementado una nueva **actualización** con mejoras de rendimiento y nuevas funcionalidades.</p>
+            <p>Por favor, recarga la página o el cache de tu navegador si experimentas problemas. ¡Gracias!</p>
+            <button id="btnAceptar">Entendido</button>
         </div>
     </div>
 

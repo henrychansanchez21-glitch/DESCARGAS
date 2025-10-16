@@ -1,186 +1,79 @@
-/* Estilos generales (base moderna) */
+/* Estilos para el cuerpo de la página (solo demostración) */
 body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f2f5;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-header {
-    background-color: #28a745; /* Un verde vibrante */
-    color: white;
-    padding: 2rem 1rem;
+    font-family: Arial, sans-serif;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
-}
-
-header p {
-    margin-top: 0.5rem;
-    font-size: 1.1em;
-    opacity: 0.9;
-}
-
-main {
-    padding: 2rem;
-    max-width: 800px;
-    margin: 2rem auto;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    flex-grow: 1;
-}
-
-main p {
-    margin-bottom: 1rem;
+    padding-top: 50px;
 }
 
 /* ------------------------------------------------------------------ */
-/* Estilos del Modal de Actualización */
+/* Estilos del Modal/Alerta */
 /* ------------------------------------------------------------------ */
 
-.modal-overlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 1000;
+/* El fondo del modal (oscurece el resto de la página) */
+.modal {
+    display: none; /* Por defecto estará oculto (el JS lo mostrará) */
+    position: fixed; /* Se superpone a todo */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.6);
-    backdrop-filter: blur(5px);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    width: 100%; /* Cubre todo el ancho */
+    height: 100%; /* Cubre todo el alto */
+    overflow: auto; /* Permite scroll si el contenido es grande */
+    background-color: rgba(0,0,0,0.6); /* Fondo semi-transparente oscuro */
+    backdrop-filter: blur(3px); /* Efecto de desenfoque sutil (opcional) */
 }
 
-.modal-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-card {
+/* El contenido de la caja de la alerta */
+.modal-content {
     background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    width: 90%;
-    max-width: 450px;
+    margin: 15% auto; /* 15% arriba y centrado horizontalmente */
     padding: 30px;
-    text-align: center;
+    border: 1px solid #888;
+    width: 80%; /* Ancho general */
+    max-width: 500px; /* Ancho máximo para pantallas grandes */
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: left;
     position: relative;
-    transform: translateY(-50px) scale(0.9);
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    animation-name: animatetop;
+    animation-duration: 0.4s
 }
 
-.modal-overlay.active .modal-card {
-    transform: translateY(0) scale(1);
-    opacity: 1;
+/* Animación para que aparezca desde arriba */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
 }
 
-.close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 2em;
+/* Botón de cerrar (la 'X') */
+.close-button {
     color: #aaa;
-    background: none;
-    border: none;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 5px;
-    transition: color 0.2s ease;
-}
-
-.close-btn:hover {
-    color: #555;
-}
-
-.modal-header {
-    margin-bottom: 20px;
-}
-
-/* Icono animado simplificado con CSS */
-.update-icon-circle {
-    width: 70px;
-    height: 70px;
-    background-color: #28a745; /* Fondo del icono */
-    border-radius: 50%;
-    margin: 0 auto 15px auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); /* Sombra inicial */
-    animation: pulse 2s infinite; /* Aplica la animación */
-}
-
-.icon-text {
-    font-size: 36px;
-    line-height: 1;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 20px rgba(40, 167, 69, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
-    }
-}
-
-.modal-header h2 {
-    font-size: 2em;
-    color: #333;
-    margin: 0;
-}
-
-.modal-body {
-    margin-bottom: 30px;
-    color: #555;
-}
-
-.modal-body p {
-    margin-bottom: 10px;
-    font-size: 1.1em;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: center;
-}
-
-.action-btn {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    float: right;
+    font-size: 28px;
     font-weight: bold;
-    width: 100%; /* El botón ocupa todo el ancho */
+    cursor: pointer;
 }
 
-.primary-btn {
-    background-color: #28a745;
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Estilo del botón "Entendido" */
+#btnAceptar {
+    background-color: #007bff; /* Azul primario */
     color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+    display: block;
+    width: 100%;
 }
 
-.primary-btn:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+#btnAceptar:hover {
+    background-color: #0056b3;
 }

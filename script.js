@@ -1,52 +1,34 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const updateModal = document.getElementById('updateModal');
-    const closeBtn = document.querySelector('.close-btn');
-    const understoodBtn = document.getElementById('understoodBtn');
+    // 1. Obtener los elementos del DOM
+    const alerta = document.getElementById('alertaActuacion');
+    const botonCerrarX = document.querySelector('.close-button');
+    const botonAceptar = document.getElementById('btnAceptar');
 
-    // Función para mostrar el modal
-    function showModal() {
-        updateModal.classList.add('active');
+    // 2. Función para mostrar la alerta
+    function mostrarAlerta() {
+        alerta.style.display = 'block';
     }
 
-    // Función para ocultar el modal (utilizada por la 'X' y el clic fuera)
-    function hideModal() {
-        updateModal.classList.remove('active');
-        setTimeout(() => {
-            updateModal.style.display = 'none';
-        }, 300);
+    // 3. Función para ocultar la alerta
+    function ocultarAlerta() {
+        alerta.style.display = 'none';
     }
 
-    // ** LÓGICA CLAVE DE CIERRE **
-    function closeWindow() {
-        // Primero, ocultamos la alerta para una mejor experiencia visual
-        hideModal();
-        
-        // El navegador intentará cerrar la ventana/pestaña actual.
-        // ADVERTENCIA: Solo funcionará si la página fue abierta con window.open() o en algunos 
-        // navegadores antiguos/configuraciones específicas, debido a las restricciones de seguridad.
-        window.close();
+    // 4. Asignar los eventos de clic
+    botonCerrarX.addEventListener('click', ocultarAlerta);
+    botonAceptar.addEventListener('click', ocultarAlerta);
 
-        // Si window.close() falla (que es lo más probable si la abrió el usuario), 
-        // puedes redirigir a una página en blanco como alternativa:
-        // Si no se cierra, verás este alert:
-        alert("La web ha intentado cerrarse, pero tu navegador no lo permite por seguridad. La web permanecerá abierta.");
-    }
-    // ** FIN DE LÓGICA CLAVE DE CIERRE **
-
-
-    // Evento para el botón de cerrar (la 'X') - Sigue solo ocultando el modal
-    closeBtn.addEventListener('click', hideModal);
-
-    // Evento para el botón "Entendido" - ¡Ahora intenta cerrar la web!
-    understoodBtn.addEventListener('click', closeWindow);
-
-    // Opcional: cerrar el modal al hacer clic fuera de la tarjeta
-    updateModal.addEventListener('click', function(event) {
-        if (event.target === updateModal) {
-            hideModal();
+    // 5. Ocultar la alerta si el usuario hace clic fuera de ella (opcional)
+    window.addEventListener('click', function(event) {
+        if (event.target === alerta) {
+            ocultarAlerta();
         }
     });
 
-    // Mostrar el modal automáticamente cuando la página carga
-    showModal();
+    // 6. Mostrar la alerta automáticamente al cargar la página
+    mostrarAlerta(); 
+    
+    /* Si solo quieres mostrarla bajo ciertas condiciones (ej. después de una acción), 
+    puedes llamar a mostrarAlerta() cuando sea necesario, en lugar de al inicio. 
+    */
 });
