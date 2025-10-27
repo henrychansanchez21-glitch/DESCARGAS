@@ -1,115 +1,169 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Grupo H - Tienda de Aplicaciones Interactiva</title>
-    <link rel="stylesheet" href="style.css"> 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VideosHub - Descarga tus videos Favoritos</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #0f0f1b;
+      color: #fff;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 20px;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    .games-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .game-card {
+      background: #1a1a2e;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .game-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(37, 117, 252, 0.5);
+    }
+
+    .game-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #4dccff;
+    }
+
+    .game-card p {
+      font-size: 0.95rem;
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    .download-btn {
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .download-btn:hover {
+      background: linear-gradient(to right, #ff4b2b, #ff416c);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
-    
-    <header class="main-header">
-        <div class="container header-content">
-            <h1 class="logo">App Grupo H <span class="pro-text">+</span></h1>
-            <a href="#" class="profile-btn"><i class="fas fa-circle" style="color: #FFAF4C4C;"></i> Estatus ON</a>
-        </div>
-    </header>
 
-    <main class="container">
-        
-        <section class="hero-banner" onmousemove="handleParallax(event)">
-            <div class="carousel premium-card">
-                <div class="banner-text">
-                    <h2>🚀 El Futuro está en App Grupo H</h2>
-                    <p>Descubre las mejores aplicaciones y archivos con con la mejor aplicación de descargas .</p>
-                </div>
-                <div class="parallax-layer"></div>
-            </div>
-        </section>
+  <header>
+    <h1>VideosHub</h1>
+    <p>Descarga tus videos favoritos de forma segura y rápida</p>
+  </header>
 
-        <nav class="main-categories">
-            <ul>
-                <li><a href="#" class="category-link active" data-category="all">Todos</a></li>
-            </ul>
-        </nav>
+  <div class="games-container">
+    <!-- Juego 1 -->
+    <div class="game-card">
+      <h3>Therealgraciebon</h3>
+      <p>Aventuras Calientes</p>
+      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/ijtnoehgjeb08f9/Pack_G_1396.zip/file', '_blank')">Descargar</button>
+    </div>
 
-        <section class="app-section top-charts">
-            <h2>📤ACTUALIZACIONES📤</h2>
-            <div class="app-list grid-view" id="app-results">
-                
-                <article class="app-card animated-hover" data-category="productivity" data-name="Productivity Master">
-                    <img src="https://via.placeholder.com/120x120/5e35b1/ffffff?text=P" alt="Icono de App" class="interactive-icon">
-                    <div class="app-info">
-                        <h3>HOLOGRAMA RGB</h3>
-                        <p class="developer">Mira a tus enemigos.</p>
-                        <div class="rating"><span>⭐️ 4.9</span></div>
-                    </div>
-                    <div class="hover-detail">
-                        <p>¡Pruébalo ahora!</p>
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <a href="#" class="download-btn" data-type="free">Descargar</a>
-                </article>
+    <!-- Juego 2 -->
+    <div class="game-card">
+      <h3>Warencitaaa_</h3>
+      <p>Sumérgete en lo hot.</p>
+      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/9jukpth8vu48pmd/Solange_Pack-RelaxBuzz.zip/file', '_blank')">Descargar</button>
+    </div>
 
-                <article class="app-card animated-hover" data-category="games" data-name="Galaxy Runner X">
-                    <img src="https://via.placeholder.com/120x120/e53935/ffffff?text=G" alt="Icono de Juego" class="interactive-icon">
-                    <div class="app-info">
-                        <h3>FAKE LAG MOBILE</h3>
-                        <p class="developer">Paraliza a tus enemigos</p>
-                        <div class="rating"><span>⭐️ 4.5</span> (30k)</div>
-                    </div>
-                    <div class="hover-detail">
-                        <p>Congelalos y matalos ya!.</p>
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <a href="#" class="download-btn" data-type="paid">Descargar</a>
-                </article>
-                
-                <article class="app-card animated-hover" data-category="design" data-name="Design Flow Pro">
-                    <img src="https://via.placeholder.com/120x120/1e88e5/ffffff?text=D" alt="Icono de Diseño" class="interactive-icon">
-                    <div class="app-info">
-                        <h3>DELTA FORCE</h3>
-                        <p class="developer">Ejecutador de Scripts</p>
-                        <div class="rating"><span>⭐️ 4.7</span> (8k)</div>
-                    </div>
-                    <div class="hover-detail">
-                        <p>Ejecutador de Scripts para Roblox Mobile.</p>
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <a href="#" class="download-btn" data-type="free">Descargar</a>
-                </article>
-                
-                <article class="app-card animated-hover" data-category="productivity" data-name="Task Manager 360">
-                    <img src="https://via.placeholder.com/120x120/43a047/ffffff?text=T" alt="Icono de Tareas" class="interactive-icon">
-                    <div class="app-info">
-                        <h3>SCRIPTS ROBA UN BRAINROT</h3>
-                        <p class="developer">Robar</p>
-                        <div class="rating"><span>⭐️ 4.6</span> (25k)</div>
-                    </div>
-                    <div class="hover-detail">
-                        <p>Roba con ventajas a hora!!.</p>
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <a href="#" class="download-btn" data-type="paid">Descargar</a>
-                </article>
+    <!-- Juego 3 -->
+    <div class="game-card">
+      <h3>Valentina94</h3>
+      <p>Locura</p>
+      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/euc9xya24rx4l93/Valentina94.zip/file', '_blank')">Descargar</button>
+    </div>
 
-            </div>
-        </section>
+    <!-- Juego 4 -->
+    <div class="game-card">
+      <h3>Yohana Cano</h3>
+      <p>Construye tu divercion.</p>
+      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/7l88y3v6td222kc/YAJNA+CANO🔥🍑🍒.zip/file', '_blank')">Descargar</button>
+    </div>
 
-    </main>
+    <!-- Juego 5 -->
+    <div class="game-card">
+      <h3>Solanje_Packs</h3>
+      <p>Variable rico.</p>
+      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/9jukpth8vu48pmd/Solange_Pack-RelaxBuzz.zip/file', '_blank')">Descargar</button>
+    </div>
 
-    <footer>
-        <div class="container footer-content">
-            <p>&copy; 2025 AppGrupo H.</p>
-            <ul class="footer-links">
-                <li><a href="#">Telegram</a></li>
-                <li><a href="#">Grupo Oficial</a></li>
-            </ul>
-        </div>
-    </footer>
+    <!-- Juego 6 -->
+    <div class="game-card">
+      <h3>Pack_G_1396</h3>
+      <p>Mucho pastel para poca vela.</p>
+      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/ijtnoehgjeb08f9/Pack_G_1396.zip/file', '_blank')">Descargar</button>
+    </div>
 
-    <script src="script.js"></script>
+    <!-- Juego 7 -->
+    <div class="game-card">
+      <h3>Próximamente</h3>
+      <p>OFF</p>
+      <button class="download-btn" onclick="alert('Iniciando descarga de Cyber Heist...')">Descargar</button>
+    </div>
+
+    <!-- Juego 8 -->
+    <div class="game-card">
+      <h3>Próximo</h3>
+      <p>OFF</p>
+      <button class="download-btn" onclick="alert('Iniciando descarga de Pirate Seas...')">Descargar</button>
+    </div>
+
+    <!-- Juego 9 -->
+    <div class="game-card">
+      <h3>Próximo</h3>
+      <p>OFF</p>
+      <button class="download-btn" onclick="alert('Iniciando descarga de Samurai Legacy...')">Descargar</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 VideosHub - Todos los derechos reservados.</p>
+  </footer>
+
 </body>
 </html>
