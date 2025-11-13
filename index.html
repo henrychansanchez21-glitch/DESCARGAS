@@ -1,169 +1,686 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VideosHub - Descarga tus videos Favoritos</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Asignación - Firebase RTDB Sync</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables y Reseteo: Estilo Minimalista y Profesional */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            /* Colores Base */
+            --primary: #004d7a; /* Deep Navy */
+            --secondary: #00a896; /* Turquesa/Acento */
+            --dark: #2c3e50; /* Texto principal */
+            --light-bg: #ecf0f1; /* Fondo muy claro */
+            --card-bg: #ffffff;
+            /* Sombras sutiles para minimalismo */
+            --shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.12);
+            /* Transición más fluida */
+            --transition: all 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
+        }
+        
+        body {
+            background: var(--light-bg);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 30px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Contenedor Principal */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Encabezado: Limpio y Sobrio */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary);
+            transition: var(--transition);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 400; 
+            color: var(--dark);
+        }
+        
+        /* Contenedor de Tarjetas de Usuario */
+        .users-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        /* Tarjeta de Usuario: Estilo de "Ladrillo de Información" */
+        .user-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 35px;
+            transition: var(--transition);
+            position: relative;
+            transform: translateY(0);
+            opacity: 0;
+            animation: cardFadeIn 0.8s forwards;
+            border-left: 5px solid var(--secondary); 
+        }
+        
+        .user-card:hover {
+            transform: translateY(-5px); 
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Animación de entrada de tarjeta */
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .user-card:nth-child(1) { animation-delay: 0.1s; }
+        .user-card:nth-child(2) { animation-delay: 0.2s; }
+        .user-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        /* Encabezado dentro de la tarjeta */
+        .user-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .user-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .user-name {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* Lista de Tareas */
+        .task-list {
+            list-style-type: none;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .task-list::-webkit-scrollbar { width: 6px; }
+        .task-list::-webkit-scrollbar-track { background: var(--light-bg); border-radius: 10px; }
+        .task-list::-webkit-scrollbar-thumb { background: rgba(0, 168, 150, 0.4); border-radius: 10px; }
+        .task-list::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
+        
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: background-color 0.2s, padding-left 0.2s;
+        }
 
-    body {
-      background-color: #0f0f1b;
-      color: #fff;
-      padding: 20px;
-    }
+        .task-item:hover {
+            background-color: rgba(0, 168, 150, 0.03); 
+            padding-left: 5px; 
+        }
+        
+        .task-item:last-child { border-bottom: none; }
+        
+        /* Checkbox Minimalista */
+        .task-checkbox {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            position: relative;
+            appearance: none;
+            border: 2px solid var(--primary); 
+            border-radius: 3px;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        
+        .task-checkbox:checked {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .task-checkbox:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 10px;
+        }
+        
+        .task-text {
+            flex: 1;
+            font-size: 1rem;
+            color: var(--dark);
+            transition: var(--transition);
+            font-weight: 500; 
+        }
+        
+        .task-checkbox:checked + .task-text {
+            text-decoration: line-through;
+            color: var(--secondary);
+            opacity: 0.6;
+            font-weight: 400;
+        }
 
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-      padding: 20px;
-      background: linear-gradient(to right, #6a11cb, #2575fc);
-      border-radius: 12px;
-    }
+        /* Mensaje de Estado (Henry: En ruta) */
+        .route-message {
+            text-align: center;
+            padding: 18px 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary); 
+            background: rgba(0, 77, 122, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 77, 122, 0.3);
+        }
 
-    h1 {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
-    }
+        .route-message i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* Estadísticas y Progreso */
+        .stats {
+            margin-top: 35px;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary);
+        }
+        
+        .stats h3 {
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+        
+        .progress-container {
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            height: 15px; 
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            transition: width 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            position: relative;
+        }
 
-    .games-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 25px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: skewX(-10deg);
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+        
+        /* Pie de página */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            padding: 15px;
+            opacity: 0.7;
+        }
+        
+        /* Media Queries para responsividad */
+        @media (max-width: 768px) {
+            .users-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
 
-    .game-card {
-      background: #1a1a2e;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    .game-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 8px 20px rgba(37, 117, 252, 0.5);
-    }
-
-    .game-card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-      color: #4dccff;
-    }
-
-    .game-card p {
-      font-size: 0.95rem;
-      color: #ccc;
-      margin-bottom: 15px;
-    }
-
-    .download-btn {
-      background: linear-gradient(to right, #ff416c, #ff4b2b);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .download-btn:hover {
-      background: linear-gradient(to right, #ff4b2b, #ff416c);
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      padding: 20px;
-      color: #888;
-      font-size: 0.9rem;
-    }
-  </style>
+        /* Notificación de guardado */
+        .save-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--secondary); 
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            transform: translateY(120px);
+            opacity: 0;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+            z-index: 1000;
+            font-weight: 500;
+        }
+        
+        .save-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-
-  <header>
-    <h1>VideosHub</h1>
-    <p>Descarga tus videos favoritos de forma segura y rápida</p>
-  </header>
-
-  <div class="games-container">
-    <!-- Juego 1 -->
-    <div class="game-card">
-      <h3>Therealgraciebon</h3>
-      <p>Aventuras Calientes</p>
-      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/ijtnoehgjeb08f9/Pack_G_1396.zip/file', '_blank')">Descargar</button>
+    
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-tasks"></i> PANEL DE TAREAS</h1>
+            <p class="subtitle">Gestión de Tareas Clave.</p>
+        </header>
+        
+        <div class="users-container" id="users-container">
+            </div>
+        
+        <div class="stats">
+            <h3><i class="fas fa-chart-bar"></i> RESUMEN DE REPORTES</h3>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="global-progress" style="width: 0%"></div>
+                </div>
+                <div class="progress-info">
+                    <span id="completed-tasks">0 tareas completadas</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+            </div>
+            <p id="progress-text">Progreso general del equipo</p>
+        </div>
+        
+        <footer>
+            <p>©MrHenryYT (Sincronizado con Firebase RTDB)</p>
+        </footer>
     </div>
 
-    <!-- Juego 2 -->
-    <div class="game-card">
-      <h3>Warencitaaa_</h3>
-      <p>Sumérgete en lo hot.</p>
-      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/9jukpth8vu48pmd/Solange_Pack-RelaxBuzz.zip/file', '_blank')">Descargar</button>
+    <div class="save-notification" id="save-notification">
+        <i class="fas fa-check-circle"></i> Sincronización de Datos Exitosa
     </div>
 
-    <!-- Juego 3 -->
-    <div class="game-card">
-      <h3>Valentina94</h3>
-      <p>Locura</p>
-      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/euc9xya24rx4l93/Valentina94.zip/file', '_blank')">Descargar</button>
-    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    
+    <script>
+        
+        // 2. CONFIGURACIÓN E INICIALIZACIÓN DE TU PROYECTO
+        // *************************************************************************
+        // *** CREDENCIALES AÑADIDAS POR EL USUARIO ***
+        // *************************************************************************
+        const firebaseConfig = {
+            apiKey: "AIzaSyBcdWMdR_xVCFFQQPcTGPhbw8DYykN4qUg", 
+            authDomain: "app-de-tareas-80324.firebaseapp.com",
+            projectId: "app-de-tareas-80324",
+            storageBucket: "app-de-tareas-80324.firebasestorage.app",
+            messagingSenderId: "166776767275",
+            appId: "1:166776767275:web:a581ec25fc4c05063f3b6e",
+            databaseURL: "https://app-de-tareas-80324-default-rtdb.firebaseio.com"
+        };
 
-    <!-- Juego 4 -->
-    <div class="game-card">
-      <h3>Yohana Cano</h3>
-      <p>Construye tu divercion.</p>
-      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/7l88y3v6td222kc/YAJNA+CANO🔥🍑🍒.zip/file', '_blank')">Descargar</button>
-    </div>
+        // Inicializar Firebase y Realtime Database
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = app.database();
+        // Definir la Referencia del Documento: El nodo principal donde se guardará el estado.
+        const SYNC_REF = database.ref('estado_global');
 
-    <!-- Juego 5 -->
-    <div class="game-card">
-      <h3>Solanje_Packs</h3>
-      <p>Variable rico.</p>
-      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/9jukpth8vu48pmd/Solange_Pack-RelaxBuzz.zip/file', '_blank')">Descargar</button>
-    </div>
 
-    <!-- Juego 6 -->
-    <div class="game-card">
-      <h3>Pack_G_1396</h3>
-      <p>Mucho pastel para poca vela.</p>
-      <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/ijtnoehgjeb08f9/Pack_G_1396.zip/file', '_blank')">Descargar</button>
-    </div>
+        // Tareas que originalmente eran de Carlos (4) y Ammy (4) y se transfirieron a Henry
+        const tareasTransferidasACarlos = [
+            "Perfileria",
+            "TV Wall",
+            "Nichos",
+            "Quiosco de teléfonos" 
+        ];
+        
+        const tareasTransferidasAAmmy = [
+            "Baño",
+            "Comedor",
+            "Site",
+            "Luces"
+        ]; 
+        
+        // Tareas fijas de Henry (AHORA VACÍAS y se RESTAURA el mensaje)
+        const tareasHenry = []; 
+        const mensajeHenry = "En ruta"; // Henry vuelve a estar "En ruta" ya que no tiene tareas operativas asignadas.
 
-    <!-- Juego 7 -->
-    <div class="game-card">
-      <h3>Próximamente</h3>
-      <p>OFF</p>
-      <button class="download-btn" onclick="alert('Iniciando descarga de Cyber Heist...')">Descargar</button>
-    </div>
+        // Tareas de Carlos (8 TAREAS ORIGINALES + 4 TRANSFERIDAS DE HENRY = 12 TAREAS)
+        const tareasCarlos = [
+            "Quioscos de uso personal",
+            "Quiosco de electrodomésticos",
+            "Góndolas",
+            "escritorios de atención al cliente",
+            "Archivos", 
+            "lienzos Azteca",
+            "quiosco de video juegos",
+            "columnas",
+            // Tareas añadidas de Henry:
+            ...tareasTransferidasACarlos 
+        ];
 
-    <!-- Juego 8 -->
-    <div class="game-card">
-      <h3>Próximo</h3>
-      <p>OFF</p>
-      <button class="download-btn" onclick="alert('Iniciando descarga de Pirate Seas...')">Descargar</button>
-    </div>
+        // Tareas de Ammy (11 TAREAS ORIGINALES + 4 TRANSFERIDAS DE HENRY = 15 TAREAS)
+        const tareasAmmy = [
+            "Planta",
+            "Techo",
+            "Regillas",
+            "Tinacos",
+            "Luz de corredor",
+            "góndolas",
+            "bodega",
+            "fachada",
+            "parqueo",
+            "bunker",
+            "Pintura gris", 
+            // Tareas añadidas de Henry:
+            ...tareasTransferidasAAmmy
+        ];
+        
+        // Usuarios fijos
+        const usuarios = [
+            { nombre: "Henry", tareas: tareasHenry.length, mensaje: mensajeHenry },
+            { nombre: "Carlos", tareas: tareasCarlos.length }, 
+            { nombre: "Ammy", tareas: tareasAmmy.length } 
+        ];
+        
+        // Función para obtener tareas fijas según el usuario
+        function obtenerTareasFijas(nombreUsuario) {
+            if (nombreUsuario === "Henry") {
+                return tareasHenry;
+            }
+            if (nombreUsuario === "Carlos") {
+                return tareasCarlos;
+            }
+            if (nombreUsuario === "Ammy") {
+                return tareasAmmy;
+            }
+            return [];
+        }
+        
+        // Función para obtener el mensaje de estado (solo para Henry)
+        function obtenerMensajeEstado(nombreUsuario) {
+            if (nombreUsuario === "Henry") {
+                return mensajeHenry;
+            }
+            return null;
+        }
 
-    <!-- Juego 9 -->
-    <div class="game-card">
-      <h3>Próximo</h3>
-      <p>OFF</p>
-      <button class="download-btn" onclick="alert('Iniciando descarga de Samurai Legacy...')">Descargar</button>
-    </div>
-  </div>
+        // 3. FUNCIÓN PARA GUARDAR ESTADO EN REALTIME DATABASE
+        async function guardarEstado() {
+            const estado = {};
+            document.querySelectorAll('.user-card').forEach((card) => {
+                const userNombre = card.querySelector('.user-name').textContent;
+                estado[userNombre] = [];
+                
+                card.querySelectorAll('.task-item').forEach((item) => {
+                    const checkbox = item.querySelector('.task-checkbox');
+                    const completada = checkbox ? checkbox.checked : false; 
+                    estado[userNombre].push(completada);
+                });
+            });
+            
+            // Reemplazamos localStorage con SYNC_REF.set para guardar en la nube
+            try {
+                await SYNC_REF.set({ 
+                    taskAssignmentState: estado,
+                    lastUpdated: new Date().toISOString()
+                });
+                mostrarNotificacion("Sincronización de Datos Exitosa");
+            } catch (error) {
+                console.error("Error al guardar estado en Firebase RTDB:", error);
+                mostrarNotificacion("ERROR al sincronizar datos", true);
+            }
+        }
+        
+        // 4. FUNCIÓN PARA CARGAR ESTADO DESDE REALTIME DATABASE
+        async function cargarEstado() {
+             try {
+                // Usamos once('value') para obtener los datos una sola vez
+                const snapshot = await SYNC_REF.once('value');
+                
+                if (!snapshot.exists()) {
+                    console.log("No existe estado guardado en Firebase RTDB. Usando estado inicial.");
+                    return; 
+                }
+                
+                const data = snapshot.val();
+                const estado = data.taskAssignmentState;
+                
+                document.querySelectorAll('.user-card').forEach(card => {
+                    const userNombre = card.querySelector('.user-name').textContent;
+                    if (estado && estado[userNombre]) {
+                        card.querySelectorAll('.task-item').forEach((item, index) => {
+                            const checkbox = item.querySelector('.task-checkbox');
+                            if (checkbox) {
+                                 // Asegurar que solo marcamos si el estado guardado tiene una entrada y es 'true'
+                                 if (index < estado[userNombre].length && estado[userNombre][index] === true) {
+                                    checkbox.checked = true;
+                                } else {
+                                     checkbox.checked = false; 
+                                }
+                            }
+                        });
+                    }
+                });
+                
+                actualizarProgreso();
+                mostrarNotificacion("Datos cargados desde Firebase RTDB");
 
-  <footer>
-    <p>© 2025 VideosHub - Todos los derechos reservados.</p>
-  </footer>
+            } catch (error) {
+                console.error("Error al cargar estado desde Firebase RTDB:", error);
+                mostrarNotificacion("ERROR al cargar datos. Usando estado inicial.", true);
+            }
+        }
+        
+        // FUNCIÓN DE NOTIFICACIÓN AJUSTADA
+        function mostrarNotificacion(message, isError = false) {
+            const notification = document.getElementById('save-notification');
+            notification.textContent = message;
+            
+            // Cambiar color para errores
+            notification.style.background = isError ? '#c0392b' : 'var(--secondary)';
+            
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
 
+        // Función para crear la asignación de tareas (ajustada para usar RTDB)
+        async function crearAsignacionTareas() {
+            const usuariosContainer = document.getElementById('users-container');
+            usuariosContainer.innerHTML = '';
+            
+            // Crear la estructura de tarjetas en el DOM
+            usuarios.forEach(usuario => {
+                const tareasUsuario = obtenerTareasFijas(usuario.nombre);
+                crearTarjetaUsuario(usuario.nombre, tareasUsuario);
+            });
+            
+            // 2. Cargar el estado guardado de Firebase
+            await cargarEstado(); 
+        }
+
+        // Función auxiliar para crear una tarjeta de usuario
+        function crearTarjetaUsuario(nombre, tareas) {
+            const usuariosContainer = document.getElementById('users-container');
+            const mensajeEstado = obtenerMensajeEstado(nombre);
+            
+            const userCard = document.createElement('div');
+            userCard.className = 'user-card';
+            
+            const userHeader = document.createElement('div');
+            userHeader.className = 'user-header';
+            
+            const userAvatar = document.createElement('div');
+            userAvatar.className = 'user-avatar';
+            userAvatar.textContent = nombre.charAt(0);
+            
+            const userName = document.createElement('div');
+            userName.className = 'user-name';
+            userName.textContent = nombre;
+            
+            userHeader.appendChild(userAvatar);
+            userHeader.appendChild(userName);
+            
+            const taskList = document.createElement('ul');
+            taskList.className = 'task-list';
+            
+            if (mensajeEstado && nombre === "Henry") {
+                // Henry: Muestra el mensaje de estado (En ruta)
+                const messageItem = document.createElement('li');
+                messageItem.className = 'route-message';
+                messageItem.innerHTML = `<i class="fas fa-truck-moving"></i> ${mensajeEstado}`;
+                taskList.appendChild(messageItem);
+            } else if (tareas.length === 0) {
+                // Mensaje genérico de sin tareas
+                const emptyMessage = document.createElement('li');
+                emptyMessage.className = 'task-item';
+                emptyMessage.style.justifyContent = 'center';
+                emptyMessage.innerHTML = '<span class="task-text" style="color:var(--secondary);">Sin tareas asignadas.</span>';
+                taskList.appendChild(emptyMessage);
+            } else {
+                // Carlos, Ammy y otros: Muestran la lista de tareas
+                tareas.forEach(tarea => {
+                    const taskItem = document.createElement('li');
+                    taskItem.className = 'task-item';
+                    
+                    const taskCheckbox = document.createElement('input');
+                    taskCheckbox.type = 'checkbox';
+                    taskCheckbox.className = 'task-checkbox';
+                    
+                    // Event listener para actualizar progreso Y guardar estado (usando la nueva función RTDB)
+                    taskCheckbox.addEventListener('change', function() {
+                        actualizarProgreso();
+                        guardarEstado(); 
+                    });
+                    
+                    const taskText = document.createElement('span');
+                    taskText.className = 'task-text';
+                    taskText.textContent = tarea;
+                    
+                    taskItem.appendChild(taskCheckbox);
+                    taskItem.appendChild(taskText);
+                    taskList.appendChild(taskItem);
+                });
+            }
+            
+            userCard.appendChild(userHeader);
+            userCard.appendChild(taskList);
+            usuariosContainer.appendChild(userCard);
+        }
+        
+        // Función para actualizar el progreso general
+        function actualizarProgreso() {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            
+            // Solo cuenta los checkboxes que están en tarjetas que no tienen el mensaje de "En ruta" (o "Sin tareas asignadas.")
+            const tareasReales = Array.from(checkboxes).filter(cb => {
+                const card = cb.closest('.user-card');
+                const listContent = card.querySelector('.task-list').innerHTML;
+                // Excluir tarjetas que solo tienen el mensaje de estado (como Henry sin tareas)
+                return !listContent.includes('route-message') && !listContent.includes('Sin tareas asignadas.');
+            });
+            
+            const totalTareas = tareasReales.length;
+            const tareasCompletadas = tareasReales.filter(checkbox => checkbox.checked).length;
+            
+            const porcentaje = totalTareas > 0 ? Math.round((tareasCompletadas / totalTareas) * 100) : 0;
+            
+            const progressBar = document.getElementById('global-progress');
+            progressBar.style.width = `${porcentaje}%`;
+            
+            document.getElementById('progress-percent').textContent = `${porcentaje}%`;
+            document.getElementById('completed-tasks').textContent = `${tareasCompletadas} tareas completadas`;
+            document.getElementById('progress-text').textContent = 
+                `${tareasCompletadas} de ${totalTareas} tareas completadas (${porcentaje}%)`;
+        }
+        
+        // Inicializar el sistema al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            crearAsignacionTareas();
+            
+            // Guardar estado automáticamente cada 30 segundos (Ahora guarda en Firebase)
+            setInterval(guardarEstado, 30000);
+            
+            // BONUS: Escucha en tiempo real (si las reglas de Firebase lo permiten)
+            SYNC_REF.on('value', (snapshot) => {
+                 // Previene la carga doble si se acaba de cargar.
+                 if (document.readyState === 'complete') {
+                     console.log("Cambios en Firebase detectados. Recargando estado.");
+                     // Si los datos cambian en la nube (por otro usuario), recarga la UI
+                     cargarEstado(); 
+                 }
+            });
+        });
+        
+        // Guardar estado cuando se cierre la página (Ahora guarda en Firebase)
+        window.addEventListener('beforeunload', guardarEstado);
+    </script>
 </body>
 </html>
