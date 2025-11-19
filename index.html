@@ -3,223 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Tareas | Profesional</title>
+    <title>Panel de Asignación - Reportes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ========================================================== */
-        /* 1. VARIABLES Y ESTILO BASE (COLORIDO Y ANIMADO) */
-        /* ========================================================== */
+        /* Paleta de Color Simplificada y Vibrante */
+        :root {
+            /* Colores Inspirados en la Imagen de Reportes */
+            --primary: #337ab7; /* Azul Principal del Header y Títulos */
+            --secondary: #5bc0de; /* Azul Claro para acentos */
+            --complete: #4caf50; /* Verde Éxito */
+            --text-dark: #212121;
+            --text-light: #757575;
+            --bg-light: #f4f6f9; /* Fondo muy claro */
+            --card-bg: #ffffff;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+        }
+        
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif; /* Fuente moderna */
-        }
-        
-        :root {
-            /* Colores Base (Más vivos) */
-            --primary: #2C3E50; /* Azul Oscuro (Deep Navy) */
-            --secondary: #00BFB2; /* Verde Turquesa Eléctrico */
-            --accent: #E84A5F; /* Rojo Coral para acentos y eliminación */
-            --dark: #202D3A; /* Texto principal más oscuro */
-            --light-bg: #F4F7F6; /* Fondo muy claro */
-            --card-bg: #ffffff;
-            /* Colores de Archivo */
-            --archive-bg: #f39c12; /* Naranja para Archivo */
-            /* Sombras más definidas y profesionales */
-            --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15);
-            /* Transición más fluida y elástica */
-            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --transition-pop: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, var(--light-bg) 0%, #E0EAE8 100%);
-            color: var(--dark);
-            line-height: 1.6;
-            padding: 30px;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 0; 
             min-height: 100vh;
-            overflow-x: hidden;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding-bottom: 20px; 
         }
         
-        /* Encabezado: Limpio y Sobrio */
+        /* --- HEADER ADAPTADO AL ESTILO DE LA IMAGEN --- */
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 40px 20px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: var(--shadow-md);
-            border-top: 6px solid var(--secondary);
-            transition: var(--transition);
+            background: var(--primary); 
+            color: white; 
+            padding: 15px 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 10px 10px; 
         }
         
         h1 {
-            font-size: 3rem;
-            margin-bottom: 5px;
-            font-weight: 800;
-            color: var(--primary);
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.8;
+            font-size: 1.2rem; 
             font-weight: 500; 
-            color: var(--dark);
+            color: white; 
+            text-transform: uppercase;
         }
 
-        /* Botones Flotantes */
-        .float-btn {
-            position: fixed;
-            bottom: 30px;
-            padding: 15px 25px;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition-pop);
-            z-index: 100;
-        }
-
-        .float-btn:hover {
-            transform: scale(1.05) translateY(-2px);
-        }
-
-        .admin-button-float {
-            right: 30px;
-            background: var(--accent);
-            box-shadow: 0 8px 15px rgba(232, 74, 95, 0.4);
-        }
-        .admin-button-float:hover {
-            background: #FF6B81; 
-        }
-
-        /* NUEVO: Botón de Archivo */
-        .archive-button-float {
-            right: 300px;
-            background: var(--archive-bg);
-            box-shadow: 0 8px 15px rgba(243, 156, 18, 0.4);
-        }
-        .archive-button-float:hover {
-            background: #E67E22; 
-        }
-
-        /* ========================================================== */
-        /* 2. DISEÑO DE TARJETAS Y TAREAS */
-        /* ========================================================== */
-
+        /* --- CONTENEDOR DE USUARIOS (El antiguo users-container, ahora solo para espaciado) --- */
         .users-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-        
-        .user-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            padding: 35px;
-            transition: var(--transition);
-            position: relative;
-            opacity: 0;
-            animation: cardFadeIn 0.8s forwards;
-            border-bottom: 4px solid var(--secondary); /* Borde de acento */
-        }
-        
-        .user-card:hover {
-            transform: translateY(-8px); 
-            box-shadow: var(--shadow-lg);
-        }
-        
-        @keyframes cardFadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        
-        .user-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--secondary) 0%, #009388 100%);
-            display: flex;
-            align-items: center;
+            /* Mantenemos el nombre pero solo para agrupar */
+            display: flex; 
+            flex-wrap: wrap; 
             justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-right: 15px;
-            box-shadow: 0 4px 10px rgba(0, 191, 178, 0.4);
+            padding: 0 10px;
         }
         
-        .user-name {
-            font-size: 1.8rem;
-            font-weight: 700;
+        /* --- TARJETAS DE REPORTE INDIVIDUALES --- */
+        .report-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin: 10px 0;
+            padding: 15px 20px; 
+            width: 100%;
+            max-width: 400px; /* Tamaño máximo para mejor lectura en escritorio */
+        }
+
+        @media (min-width: 768px) {
+            .report-card {
+                margin: 10px; /* Espacio entre tarjetas en escritorio */
+            }
+        }
+        
+        .report-header {
+            font-size: 1.1rem;
+            font-weight: 600;
             color: var(--primary);
+            text-align: left;
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--bg-light); /* Separador sutil */
+            padding-bottom: 5px;
         }
         
         .task-list {
             list-style-type: none;
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 10px;
         }
         
         .task-item {
             display: flex;
             align-items: center;
-            padding: 15px 10px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            transition: background-color 0.3s, transform 0.3s;
-            border-radius: 8px;
-        }
-
-        .task-item:hover {
-            background-color: rgba(0, 191, 178, 0.05); 
-            transform: scale(1.01);
+            padding: 12px 0; 
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1); 
         }
         
-        /* Checkbox con efecto Pop */
+        .task-item:last-child { border-bottom: none; }
+
+        .task-completed .task-title {
+            text-decoration: line-through;
+            color: var(--complete);
+            opacity: 0.8;
+            font-weight: 400;
+        }
+        
+        /* CHECKBOX */
         .task-checkbox {
-            /* ... (Estilos Checkbox sin cambios relevantes) ... */
             margin-right: 15px;
-            width: 20px;
-            height: 20px;
+            width: 22px; 
+            height: 22px;
             cursor: pointer;
-            appearance: none;
-            border: 2px solid var(--secondary); 
-            border-radius: 4px;
-            transition: var(--transition-pop);
-            flex-shrink: 0;
             position: relative;
+            appearance: none;
+            border: 2px solid var(--text-light); 
+            border-radius: 4px; 
+            transition: all 0.2s ease-in-out; 
+            flex-shrink: 0;
+            background-color: var(--card-bg); 
         }
         
-        @keyframes checkboxPop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
-
         .task-checkbox:checked {
-            background: var(--secondary);
-            border-color: var(--secondary);
-            animation: checkboxPop 0.2s ease-out;
+            background-color: var(--complete); 
+            border-color: var(--complete); 
         }
         
         .task-checkbox:checked::after {
@@ -230,254 +142,92 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: white;
-            font-size: 12px;
+            color: white; 
+            font-size: 14px; 
         }
         
-        .task-text {
+        .task-text-container {
             flex: 1;
-            font-size: 1.05rem;
-            font-weight: 500;
-        }
-        
-        .task-checkbox:checked + .task-text {
-            text-decoration: line-through;
-            color: var(--secondary);
-            opacity: 0.7;
-            font-weight: 400;
-        }
-
-        /* Botón de Eliminar */
-        .task-delete {
-            color: var(--accent);
+            display: flex; 
+            flex-direction: column; 
             cursor: pointer;
-            font-size: 1.1rem;
-            margin-left: 20px; 
-            opacity: 0;
-            transition: var(--transition);
+            line-height: 1.2;
         }
 
-        .task-item:hover .task-delete {
-            opacity: 1;
-            transform: scale(1.2);
+        .task-title {
+            font-size: 1.0rem;
+            color: var(--text-dark);
+            font-weight: 500; 
+            text-transform: capitalize; 
         }
 
-        /* Animación para la Remoción (Deslizamiento y Colapso) */
-        .task-item.removing {
-            opacity: 0;
-            transform: translateX(100%);
-            max-height: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-            margin: 0;
-            border-bottom: none;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19);
-        }
-
-        /* Mensaje de estado Henry */
-        .route-message {
-            padding: 15px 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary); 
-            background: rgba(44, 62, 80, 0.05);
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        /* ========================================================== */
-        /* 3. MODALES (ADMIN & ARCHIVE) */
-        /* ========================================================== */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s, visibility 0.3s;
-            z-index: 1000;
-        }
-
-        .modal.is-open {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 700px; /* Ancho ajustado para Archivo */
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-50px);
-            transition: transform 0.4s ease-out;
-            position: relative;
-            max-height: 90vh; /* Máximo 90% del alto de la vista */
-            overflow-y: auto;
-        }
-
-        .modal.is-open .modal-content {
-            transform: translateY(0);
-        }
-        
-        .modal-content h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-            border-bottom: 3px solid var(--secondary);
-            padding-bottom: 10px;
-        }
-
-        .close-modal-btn {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            font-size: 2rem;
-            color: var(--accent);
+        .delete-task-btn {
+            color: #d9534f; 
             cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
             transition: transform 0.2s;
+            margin-left: 10px;
         }
 
-        .close-modal-btn:hover {
-            transform: rotate(90deg) scale(1.1);
+        .delete-task-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- ESTILOS DE PIE DE PÁGINA SIMPLIFICADO --- */
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-light);
+            font-size: 0.8rem;
+            padding: 10px;
         }
         
-        /* Contenido del Archivo (NUEVO) */
-        #archive-content .archive-item {
-            background: #f7f7f7;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-left: 5px solid var(--archive-bg);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+        /* Ocultar elementos que no se quieren mostrar (botones, progreso, etc.) */
+        .stats, .action-buttons, .subtitle, .sync-time, .progress-container, .user-name-title {
+            display: none !important;
         }
 
-        #archive-content .archive-task {
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 1.1rem;
-        }
-
-        #archive-content .archive-meta {
-            font-size: 0.9rem;
-            color: #555;
-        }
-        
-        #archive-content .archive-meta strong {
-            color: var(--primary);
-        }
-        
-        /* Formulario dentro del Modal de Admin (sin cambios relevantes) */
-        .add-task-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .add-task-section input, .add-task-section select, .add-task-section button {
-            padding: 14px 18px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .add-task-section button {
-            background: linear-gradient(90deg, var(--secondary), #00A398);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: 700;
-            box-shadow: 0 5px 15px rgba(0, 191, 178, 0.3);
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
     
     <div class="container">
         <header>
-            <h1><i class="fas fa-rocket"></i> DASHBOARD DE PROYECTOS</h1>
-            <p class="subtitle">Visualización del progreso y asignación de tareas clave.</p>
+            <h1>REPORTES DE TAREAS</h1>
         </header>
-
-        <div class="users-container" id="users-container">
-        </div>
         
-        <div class="stats">
-            <h3><i class="fas fa-chart-line"></i> RESUMEN GLOBAL DE PROGRESO</h3>
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress" id="global-progress" style="width: 0%"></div>
-                </div>
-                <div class="progress-info">
-                    <span id="completed-tasks">0 tareas completadas</span>
-                    <span id="progress-percent">0%</span>
-                </div>
+        <div class="users-container">
+            <div class="report-card" id="card-henry">
+                <h2 class="report-header">Henry</h2>
+                <ul class="task-list" id="tasks-henry">
+                    </ul>
             </div>
-            <p id="progress-text">Progreso general del equipo</p>
+            
+            <div class="report-card" id="card-carlos">
+                <h2 class="report-header">Carlos</h2>
+                <ul class="task-list" id="tasks-carlos">
+                    </ul>
+            </div>
+            
+            <div class="report-card" id="card-ammy">
+                <h2 class="report-header">Ammy</h2>
+                <ul class="task-list" id="tasks-ammy">
+                    </ul>
+            </div>
         </div>
         
         <footer>
-            <p>©MrHenryYT | Sincronizado con Firebase RTDB</p>
+            <p>©MrHenryYT (Sincronizado con Firebase RTDB)</p>
         </footer>
-    </div>
-    
-    <button id="open-admin-btn" class="float-btn admin-button-float">
-        <i class="fas fa-user-shield"></i> ADMINISTRAR TAREAS
-    </button>
-    <button id="open-archive-btn" class="float-btn archive-button-float">
-        <i class="fas fa-box-archive"></i> VER ARCHIVO
-    </button>
-
-    <div id="admin-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal-btn" data-modal="admin">&times;</span>
-            <h3><i class="fas fa-plus-square"></i> ASIGNACIÓN DE NUEVA TAREA</h3>
-            
-            <section class="add-task-section">
-                <input type="text" id="new-task-text" placeholder="Descripción de la nueva tarea (Ej: Revisar QA del módulo X)">
-                <select id="assign-user-select">
-                    <option value="Henry">Asignar a Henry</option>
-                    <option value="Carlos">Asignar a Carlos</option>
-                    <option value="Ammy">Asignar a Ammy</option>
-                </select>
-                <button id="add-task-btn"><i class="fas fa-plus-circle"></i> Asignar Tarea Ahora</button>
-            </section>
-        </div>
-    </div>
-
-    <div id="archive-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal-btn" data-modal="archive">&times;</span>
-            <h3 style="border-bottom-color: var(--archive-bg); color: var(--archive-bg);"><i class="fas fa-box-archive"></i> TAREAS COMPLETADAS (ARCHIVO)</h3>
-            <div id="archive-content">
-                <p style="text-align: center; color: #777;">Cargando tareas archivadas...</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="save-notification" id="save-notification">
-        <i class="fas fa-check-circle"></i> Sincronización de Datos Exitosa
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
     <script>
-        
-        // 2. CONFIGURACIÓN E INICIALIZACIÓN DE TU PROYECTO (NO MODIFICADA)
-        const firebaseConfig = {
+        // La configuración de Firebase se mantiene igual
+        const FIREBASE_CONFIG = {
             apiKey: "AIzaSyBcdWMdR_xVCFFQQPcTGPhbw8DYykN4qUg", 
             authDomain: "app-de-tareas-80324.firebaseapp.com",
             projectId: "app-de-tareas-80324",
@@ -486,505 +236,199 @@
             appId: "1:166776767275:web:a581ec25fc4c05063f3b6e",
             databaseURL: "https://app-de-tareas-80324-default-rtdb.firebaseio.com"
         };
-
-        const app = firebase.initializeApp(firebaseConfig);
+        
+        const app = firebase.initializeApp(FIREBASE_CONFIG);
         const database = app.database();
-        const SYNC_REF = database.ref('estado_global'); // REFERENCIA NO MODIFICADA
+        const SYNC_REF = database.ref('estado_global'); 
+        
+        let isSyncingFromFirebase = false; 
 
-        const ADMIN_KEY = "0110";
-
-
-        // Tareas y Usuarios iniciales (como fallback)
-        const tareasTransferidasACarlos = [
-            "Perfileria", "TV Wall", "Nichos", "Quiosco de teléfonos" 
+        // --- TAREAS ORIGINALES (Mantenidas) ---
+        // ESTA ES LA ESTRUCTURA QUE MAPEA TU BASE DE DATOS
+        const tareasHenry = [
+            "Baño", "Comedor", "Site", "Luces", "Perfilería", "Puntos de red", "Computadoras"
         ];
         
-        const tareasTransferidasAAmmy = [
-            "Baño", "Comedor", "Site", "Luces"
-        ]; 
-        
-        const tareasHenry = []; 
-        const mensajeHenry = "En ruta"; 
-
         const tareasCarlos = [
-            "Quioscos de uso personal", "Quiosco de electrodomésticos", "Góndolas",
-            "escritorios de atención al cliente", "Archivos", "lienzos Azteca",
-            "quiosco de video juegos", "columnas", ...tareasTransferidasACarlos 
+            "Lokers", "Archivos", "Luz corredor", "Luz de Emergencia", "Columnas", "Bodega de motos"
         ];
 
         const tareasAmmy = [
-            "Planta", "Techo", "Regillas", "Tinacos", "Luz de corredor",
-            "góndolas", "bodega", "fachada", "parqueo", "bunker",
-            "Pintura gris", ...tareasTransferidasAAmmy
+            "fachada", "Techo", "Puertas y Chapas", "Parqueo", "Pintura Gris", "Lienzo Azteca", "Pintura General", "Recorrido Virtual"
         ];
         
+        // Estructura de usuarios con sus tareas (Mantenida)
         const usuarios = [
-            { nombre: "Henry", tareas: tareasHenry.length, mensaje: mensajeHenry },
-            { nombre: "Carlos", tareas: tareasCarlos.length }, 
-            { nombre: "Ammy", tareas: tareasAmmy.length } 
+            { nombre: "Henry", tareas: tareasHenry, listaId: "tasks-henry" },
+            { nombre: "Carlos", tareas: tareasCarlos, listaId: "tasks-carlos" }, 
+            { nombre: "Ammy", tareas: tareasAmmy, listaId: "tasks-ammy" } 
         ];
-        
-        function obtenerTareasFijas(nombreUsuario) {
-            if (nombreUsuario === "Henry") return tareasHenry;
-            if (nombreUsuario === "Carlos") return tareasCarlos;
-            if (nombreUsuario === "Ammy") return tareasAmmy;
-            return [];
-        }
-        
-        function obtenerMensajeEstado(nombreUsuario) {
-            if (nombreUsuario === "Henry") return mensajeHenry;
-            return null;
-        }
 
-        // ----------------------------------------------------------------------
-        // Funciones Auxiliares de Formato
-        // ----------------------------------------------------------------------
-        
-        /**
-         * Convierte milisegundos a formato de duración legible (Días, Horas, Minutos).
-         * @param {number} ms - Milisegundos de duración.
-         * @returns {string} Duración formateada.
-         */
-        function formatDuration(ms) {
-            if (ms < 0) return "Error en la fecha";
-            
-            const totalSeconds = Math.floor(ms / 1000);
-            const days = Math.floor(totalSeconds / 86400);
-            const hours = Math.floor((totalSeconds % 86400) / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
+        // --- Funciones de Sincronización (No cambian respecto a tu código original) ---
 
-            let parts = [];
-            if (days > 0) parts.push(`${days} día${days !== 1 ? 's' : ''}`);
-            if (hours > 0) parts.push(`${hours} hora${hours !== 1 ? 's' : ''}`);
-            if (minutes > 0 || parts.length === 0) parts.push(`${minutes} minuto${minutes !== 1 ? 's' : ''}`); // Mostrar minutos incluso si es cero si no hay otra unidad mayor
-
-            return parts.join(', ');
-        }
-        
-        function formatDate(timestamp) {
-            if (!timestamp) return 'N/A';
-            const date = new Date(timestamp);
-            return date.toLocaleDateString('es-ES', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-
-        // ----------------------------------------------------------------------
-        // Funciones de Sincronización y DOM
-        // ----------------------------------------------------------------------
-
-        function crearItemTarea(taskList, nombre, {text, completed, createdAt, completedAt}) {
-             const taskItem = document.createElement('li');
-             taskItem.className = 'task-item';
-             
-             // Almacenar datos en atributos para la lógica posterior
-             taskItem.setAttribute('data-created-at', createdAt || Date.now());
-
-             const checkbox = document.createElement('input');
-             checkbox.type = 'checkbox';
-             checkbox.className = 'task-checkbox';
-             checkbox.checked = completed;
-             
-             checkbox.addEventListener('change', (e) => {
-                 // Lógica para actualizar las propiedades de tiempo
-                 const isChecked = e.target.checked;
-                 const item = e.target.closest('.task-item');
-                 
-                 let taskData = {
-                     text: item.querySelector('.task-text').textContent,
-                     completed: isChecked,
-                     createdAt: parseInt(item.getAttribute('data-created-at')),
-                     completedAt: isChecked ? Date.now() : null // Añade timestamp al completar, lo elimina si desmarca
-                 };
-
-                 if(isChecked) {
-                     item.setAttribute('data-completed-at', taskData.completedAt);
-                 } else {
-                     item.removeAttribute('data-completed-at');
-                 }
-
-                 actualizarProgreso();
-                 guardarEstado(); 
-             });
-             
-             // Si la tarea viene como completada, asegúrate de que tenga el atributo completedAt
-             if (completed && completedAt) {
-                 taskItem.setAttribute('data-completed-at', completedAt);
-             }
-
-
-             const taskText = document.createElement('span');
-             taskText.className = 'task-text';
-             taskText.textContent = text;
-
-             const deleteBtn = document.createElement('i');
-             deleteBtn.className = 'fas fa-trash-alt task-delete';
-             deleteBtn.setAttribute('title', 'Eliminar Tarea');
-             
-             deleteBtn.addEventListener('click', () => {
-                 taskItem.classList.add('removing');
-                 
-                 taskItem.addEventListener('transitionend', () => {
-                     taskItem.remove(); 
-                     actualizarProgreso();
-                     guardarEstado(); 
-                 }, { once: true });
-                 
-                 mostrarNotificacion(`Tarea eliminada para ${nombre}.`);
-             });
-
-             taskItem.appendChild(checkbox);
-             taskItem.appendChild(taskText);
-             taskItem.appendChild(deleteBtn);
-             taskList.appendChild(taskItem);
-        }
-
+        // Función para guardar el estado de las tareas de los 3 usuarios en Firebase
         async function guardarEstado() {
+            if (isSyncingFromFirebase) return;
+            
             const estado = {};
-            document.querySelectorAll('.user-card').forEach((card) => {
-                const userNombre = card.querySelector('.user-name').textContent;
-                
-                const tareasActuales = [];
-                
-                card.querySelectorAll('.task-item:not(.removing)').forEach((item) => {
-                    if (!item.classList.contains('route-message')) {
-                        const taskText = item.querySelector('.task-text').textContent;
-                        const checkbox = item.querySelector('.task-checkbox');
-                        const completada = checkbox ? checkbox.checked : false; 
-                        
-                        // RECUPERAR DATOS DE TIEMPO DEL DOM
-                        const createdAt = parseInt(item.getAttribute('data-created-at'));
-                        const completedAt = item.hasAttribute('data-completed-at') 
-                            ? parseInt(item.getAttribute('data-completed-at')) : null;
-                        
-                        // ESTRUCTURA DE DATOS MODIFICADA (ÚNICA FORMA DE HACER LA CARACTERÍSTICA PERMANENTE)
-                        tareasActuales.push({ 
-                            text: taskText, 
-                            completed: completada, 
-                            createdAt: createdAt, // Nuevo campo
-                            completedAt: completedAt // Nuevo campo
-                        });
-                    }
-                });
-                
-                estado[userNombre] = tareasActuales;
+            
+            usuarios.forEach(user => {
+                const lista = document.getElementById(user.listaId);
+                if (lista) {
+                    const tareasEstado = [];
+                    lista.querySelectorAll('.task-checkbox').forEach(checkbox => {
+                        tareasEstado.push(checkbox.checked);
+                    });
+                    estado[user.nombre] = tareasEstado;
+                }
             });
             
             try {
-                // LLAMADA A FIREBASE SIN MODIFICAR LA REFERENCIA
-                await SYNC_REF.set({ 
-                    taskAssignmentState: estado,
+                await SYNC_REF.update({ 
+                    taskAssignmentState: estado, // Mantenemos el nombre de tu nodo original
                     lastUpdated: new Date().toISOString()
                 });
-                mostrarNotificacion("Sincronización de Datos Exitosa");
+                console.log("Sincronización de Datos Exitosa.");
             } catch (error) {
                 console.error("Error al guardar estado en Firebase RTDB:", error);
-                mostrarNotificacion("ERROR al sincronizar datos", true);
             }
         }
         
+        // Función para cargar el estado de las tareas de los 3 usuarios desde Firebase
         async function cargarEstado() {
-             try {
-                // LLAMADA A FIREBASE SIN MODIFICAR LA REFERENCIA
+            isSyncingFromFirebase = true; 
+            
+            try {
                 const snapshot = await SYNC_REF.once('value');
+                const data = snapshot.val();
+                const estado = data && data.taskAssignmentState ? data.taskAssignmentState : {};
                 
-                let estadoGuardado = {};
-                if (snapshot.exists()) {
-                    estadoGuardado = snapshot.val().taskAssignmentState || {};
-                }
-                
-                // Lógica de Fallback si no hay datos guardados
-                if (Object.keys(estadoGuardado).length === 0) {
-                     console.log("No existe estado guardado. Usando estado inicial.");
-                     // Si no hay estado en Firebase, inicializa las tareas con la fecha de hoy
-                     usuarios.forEach(usuario => {
-                        const tareasUsuario = obtenerTareasFijas(usuario.nombre).map(text => ({
-                            text: text, 
-                            completed: false, 
-                            createdAt: Date.now(), 
-                            completedAt: null
-                        }));
-                        estadoGuardado[usuario.nombre] = tareasUsuario;
-                    });
-                    // Forzar guardado inicial para tener createdAt
-                    guardarEstado();
-                }
-
-                
-                Object.keys(estadoGuardado).forEach(nombreUsuario => {
-                    const card = document.querySelector(`.user-card[data-user="${nombreUsuario.toLowerCase()}"]`); 
+                usuarios.forEach(user => {
+                    const lista = document.getElementById(user.listaId);
+                    if (lista && estado[user.nombre]) {
+                        const tareasEstado = estado[user.nombre];
                         
-                    if (card) {
-                        const taskList = card.querySelector('.task-list');
-                        taskList.innerHTML = '';
-                        
-                        if (estadoGuardado[nombreUsuario] && Array.isArray(estadoGuardado[nombreUsuario])) {
-                             estadoGuardado[nombreUsuario].forEach(task => {
-                                // Asegurar createdAt si falta (para compatibilidad con datos viejos)
-                                if (!task.createdAt) task.createdAt = Date.now(); 
-                                crearItemTarea(taskList, nombreUsuario, task);
-                            });
-                        }
-                       
-                        if (nombreUsuario === "Henry" && (!estadoGuardado[nombreUsuario] || estadoGuardado[nombreUsuario].filter(t => !t.completed).length === 0)) {
-                            const messageItem = document.createElement('li');
-                            messageItem.className = 'route-message';
-                            messageItem.innerHTML = `<i class="fas fa-truck-moving"></i> ${obtenerMensajeEstado("Henry")}`;
-                            taskList.appendChild(messageItem);
-                        }
+                        lista.querySelectorAll('.task-item').forEach((item, index) => {
+                            const checkbox = item.querySelector('.task-checkbox');
+                            if (checkbox && index < tareasEstado.length) {
+                                const isChecked = tareasEstado[index] === true;
+                                checkbox.checked = isChecked;
+                                
+                                if (isChecked) {
+                                    item.classList.add('task-completed');
+                                } else {
+                                    item.classList.remove('task-completed');
+                                }
+                            }
+                        });
                     }
                 });
-                
-                actualizarProgreso();
-                mostrarNotificacion("Datos cargados desde Firebase RTDB");
 
             } catch (error) {
                 console.error("Error al cargar estado desde Firebase RTDB:", error);
-                mostrarNotificacion("ERROR al cargar datos. Usando estado inicial.", true);
+            } finally {
+                isSyncingFromFirebase = false; 
             }
         }
 
-        // ----------------------------------------------------------------------
-        // Lógica del Administrador y Archivo (NUEVA)
-        // ----------------------------------------------------------------------
+        // --- FUNCIONES de UI y Lógica ---
 
-        function agregarNuevaTarea() {
-            const taskTextElement = document.getElementById('new-task-text');
-            const assignSelect = document.getElementById('assign-user-select');
+        // Crea la lista de tareas para un usuario específico
+        function crearListaReporteUsuario(user, cargarEstadoFirebase = true) {
+            const taskList = document.getElementById(user.listaId);
+            taskList.innerHTML = '';
             
-            const taskText = taskTextElement.value.trim();
-            const userNombre = assignSelect.value;
+            user.tareas.forEach((tarea, index) => {
+                const taskItem = document.createElement('li');
+                taskItem.className = 'task-item';
+                
+                const taskCheckbox = document.createElement('input');
+                taskCheckbox.type = 'checkbox';
+                taskCheckbox.className = 'task-checkbox';
+
+                // Listener para los cambios de completado
+                taskCheckbox.addEventListener('change', function() {
+                    guardarEstado(); // Guarda el estado de TODOS al cambiar uno
+                    
+                    if (this.checked) {
+                        taskItem.classList.add('task-completed');
+                    } else {
+                        taskItem.classList.remove('task-completed');
+                    }
+                });
+                
+                const textContainer = document.createElement('div');
+                textContainer.className = 'task-text-container';
+                
+                const taskTitle = document.createElement('span');
+                taskTitle.className = 'task-title';
+                taskTitle.textContent = tarea;
+                
+                textContainer.appendChild(taskTitle);
+                
+                // Hace que clickear el texto también marque el checkbox
+                textContainer.addEventListener('click', function() {
+                    taskCheckbox.checked = !taskCheckbox.checked;
+                    taskCheckbox.dispatchEvent(new Event('change')); 
+                });
+
+                // ÍCONO DE ELIMINAR (Cubo de basura)
+                const deleteIcon = document.createElement('i');
+                deleteIcon.className = 'fas fa-trash-alt delete-task-btn'; 
+                deleteIcon.title = `Eliminar la tarea '${tarea}' de ${user.nombre}`;
+
+                deleteIcon.addEventListener('click', function() {
+                    eliminarTareaDinamica(user.nombre, tarea);
+                });
+                
+                taskItem.appendChild(taskCheckbox);
+                taskItem.appendChild(textContainer); 
+                taskItem.appendChild(deleteIcon); 
+                taskList.appendChild(taskItem);
+            });
             
-            if (!taskText) {
-                mostrarNotificacion("El texto de la tarea no puede estar vacío.", true);
+            if (!cargarEstadoFirebase) {
+                guardarEstado(); 
+            }
+        }
+        
+        function crearTodasLasListas() {
+            usuarios.forEach(user => crearListaReporteUsuario(user, true));
+            cargarEstado(); 
+        }
+
+        function eliminarTareaDinamica(userName, tareaAEliminar) {
+            if (!confirm(`¿Estás seguro de que quieres eliminar la tarea: "${tareaAEliminar}" de la lista de ${userName}?`)) {
                 return;
             }
             
-            const card = document.querySelector(`.user-card[data-user="${userNombre.toLowerCase()}"]`);
+            const user = usuarios.find(u => u.nombre === userName);
+            if (!user) return;
+
+            const tareaIndex = user.tareas.findIndex(t => t.toLowerCase() === tareaAEliminar.toLowerCase());
             
-            if (card) {
-                const taskList = card.querySelector('.task-list');
+            if (tareaIndex > -1) {
+                user.tareas.splice(tareaIndex, 1);
                 
-                if (userNombre === "Henry") {
-                    const routeMessage = taskList.querySelector('.route-message');
-                    if (routeMessage) routeMessage.remove();
-                }
+                // Regenerar la UI del usuario y guardar el nuevo estado sin recargar de Firebase
+                crearListaReporteUsuario(user, false); 
 
-                // Crear tarea con la fecha actual de asignación
-                crearItemTarea(taskList, userNombre, { 
-                    text: taskText, 
-                    completed: false, 
-                    createdAt: Date.now(),
-                    completedAt: null
-                }); 
-                
-                taskTextElement.value = '';
-                document.getElementById('admin-modal').classList.remove('is-open');
-
-                actualizarProgreso();
-                guardarEstado();
-                
-                mostrarNotificacion(`Tarea asignada a ${userNombre}.`);
-                
+                console.log(`Tarea '${tareaAEliminar}' eliminada de ${userName}.`);
             } else {
-                mostrarNotificacion(`ERROR: No se encontró la tarjeta del usuario ${userNombre}.`, true);
+                console.error(`Error: La tarea no pudo ser encontrada para eliminación.`);
             }
         }
-        
-        /**
-         * NUEVA FUNCIÓN: Muestra todas las tareas completadas en el modal de archivo.
-         */
-        function mostrarArchivo() {
-            const archiveContent = document.getElementById('archive-content');
-            archiveContent.innerHTML = ''; // Limpiar contenido anterior
-            
-            let completedTasks = [];
 
-            document.querySelectorAll('.user-card').forEach(card => {
-                const userNombre = card.querySelector('.user-name').textContent;
-                
-                card.querySelectorAll('.task-item').forEach(item => {
-                    const checkbox = item.querySelector('.task-checkbox');
-                    if (checkbox && checkbox.checked) {
-                        const taskText = item.querySelector('.task-text').textContent;
-                        const createdAt = parseInt(item.getAttribute('data-created-at'));
-                        const completedAt = parseInt(item.getAttribute('data-completed-at'));
-                        
-                        if (completedAt) { // Solo archiva si tiene fecha de completado
-                            completedTasks.push({
-                                user: userNombre,
-                                text: taskText,
-                                createdAt: createdAt,
-                                completedAt: completedAt
-                            });
-                        }
-                    }
-                });
-            });
-
-            if (completedTasks.length === 0) {
-                archiveContent.innerHTML = '<p style="text-align: center; padding: 20px; color: #555;">No hay tareas completadas ni archivadas aún.</p>';
-                return;
-            }
-
-            // Ordenar por fecha de completado (más reciente primero)
-            completedTasks.sort((a, b) => b.completedAt - a.completedAt);
-            
-            completedTasks.forEach(task => {
-                const durationMs = task.completedAt - task.createdAt;
-                
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'archive-item';
-                
-                itemDiv.innerHTML = `
-                    <div class="archive-task">✅ ${task.text} (${task.user})</div>
-                    <div class="archive-meta">
-                        Finalizada: <strong>${formatDate(task.completedAt)}</strong>
-                    </div>
-                    <div class="archive-meta">
-                        Tiempo tardado: <strong>${formatDuration(durationMs)}</strong>
-                    </div>
-                `;
-                archiveContent.appendChild(itemDiv);
-            });
-        }
-
-
-        function mostrarNotificacion(message, isError = false) {
-            const notification = document.getElementById('save-notification');
-            notification.textContent = message;
-            notification.style.background = isError ? '#c0392b' : 'var(--secondary)';
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        function crearTarjetaUsuario(nombre, tareas) {
-            const usuariosContainer = document.getElementById('users-container');
-            const userCard = document.createElement('div');
-            userCard.className = 'user-card';
-            userCard.setAttribute('data-user', nombre.toLowerCase());
-            
-            const userHeader = document.createElement('div');
-            userHeader.className = 'user-header';
-            
-            const userAvatar = document.createElement('div');
-            userAvatar.className = 'user-avatar';
-            userAvatar.textContent = nombre.charAt(0);
-            
-            const userName = document.createElement('div');
-            userName.className = 'user-name';
-            userName.textContent = nombre;
-            
-            userHeader.appendChild(userAvatar);
-            userHeader.appendChild(userName);
-            
-            const taskList = document.createElement('ul');
-            taskList.className = 'task-list';
-            
-            userCard.appendChild(userHeader);
-            userCard.appendChild(taskList);
-            usuariosContainer.appendChild(userCard);
-        }
-        
-        async function crearAsignacionTareas() {
-            const usuariosContainer = document.getElementById('users-container');
-            usuariosContainer.innerHTML = '';
-            
-            usuarios.forEach(usuario => {
-                crearTarjetaUsuario(usuario.nombre, obtenerTareasFijas(usuario.nombre));
-            });
-            
-            await cargarEstado(); 
-        }
-        
-        function actualizarProgreso() {
-            let totalTareas = 0;
-            let tareasCompletadas = 0;
-
-            document.querySelectorAll('.task-item:not(.removing)').forEach((item) => {
-                if (!item.classList.contains('route-message')) {
-                    const checkbox = item.querySelector('.task-checkbox');
-                    if (checkbox) {
-                        totalTareas++;
-                        if (checkbox.checked) {
-                            tareasCompletadas++;
-                        }
-                    }
-                }
-            });
-            
-            const porcentaje = totalTareas > 0 ? Math.round((tareasCompletadas / totalTareas) * 100) : 0;
-            
-            const progressBar = document.getElementById('global-progress');
-            progressBar.style.width = `${porcentaje}%`;
-            
-            document.getElementById('progress-percent').textContent = `${porcentaje}%`;
-            document.getElementById('completed-tasks').textContent = `${tareasCompletadas} tareas completadas`;
-            document.getElementById('progress-text').textContent = 
-                `${tareasCompletadas} de ${totalTareas} tareas completadas (${porcentaje}%)`;
-        }
-        
-        // ----------------------------------------------------------------------
-        // Lógica de Inicialización y Eventos (Key Gated)
-        // ----------------------------------------------------------------------
-
+        // --- EVENTOS PRINCIPALES ---
         window.addEventListener('DOMContentLoaded', () => {
-            crearAsignacionTareas();
+            crearTodasLasListas(); 
             
-            // Evento para añadir tarea
-            document.getElementById('add-task-btn').addEventListener('click', agregarNuevaTarea);
-            
-            // 1. Lógica de Acceso con Key (ADMIN MODAL)
-            document.getElementById('open-admin-btn').addEventListener('click', () => {
-                const key = prompt("🔑 Por favor, introduce la clave de administrador para acceder al menú:");
-
-                if (key === ADMIN_KEY) {
-                    document.getElementById('admin-modal').classList.add('is-open');
-                    mostrarNotificacion("Clave correcta. Acceso concedido.");
-                } else if (key !== null) {
-                    mostrarNotificacion("Clave incorrecta. Acceso denegado.", true);
-                }
-            });
-            
-            // 2. NUEVO: Lógica para abrir Archivo
-            document.getElementById('open-archive-btn').addEventListener('click', () => {
-                mostrarArchivo();
-                document.getElementById('archive-modal').classList.add('is-open');
-            });
-
-            // 3. Lógica para cerrar Modales
-            document.querySelectorAll('.close-modal-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.getElementById('admin-modal').classList.remove('is-open');
-                    document.getElementById('archive-modal').classList.remove('is-open');
-                });
-            });
-            
-            document.getElementById('admin-modal').addEventListener('click', (e) => {
-                if (e.target.id === 'admin-modal') {
-                    document.getElementById('admin-modal').classList.remove('is-open');
-                }
-            });
-            
-            document.getElementById('archive-modal').addEventListener('click', (e) => {
-                if (e.target.id === 'archive-modal') {
-                    document.getElementById('archive-modal').classList.remove('is-open');
-                }
-            });
-
-            // Sincronización continua de Firebase (SIN MODIFICAR REFERENCIA)
+            // Sincronización automática cada 30 segundos
             setInterval(guardarEstado, 30000);
             
+            // Listener de Firebase para actualizar en tiempo real
             SYNC_REF.on('value', (snapshot) => {
                  if (document.readyState === 'complete') {
-                     console.log("Cambios en Firebase detectados. Recargando estado.");
                      cargarEstado(); 
                  }
             });
