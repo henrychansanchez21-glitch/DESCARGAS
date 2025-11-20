@@ -3,438 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Asignación - Reportes</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>¡Bienvenido!</title>
+
     <style>
-        /* Paleta de Color Simplificada y Vibrante */
-        :root {
-            /* Colores Inspirados en la Imagen de Reportes */
-            --primary: #337ab7; /* Azul Principal del Header y Títulos */
-            --secondary: #5bc0de; /* Azul Claro para acentos */
-            --complete: #4caf50; /* Verde Éxito */
-            --text-dark: #212121;
-            --text-light: #757575;
-            --bg-light: #f4f6f9; /* Fondo muy claro */
-            --card-bg: #ffffff;
-            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.5;
-            padding: 0; 
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-bottom: 20px; 
-        }
-        
-        /* --- HEADER ADAPTADO AL ESTILO DE LA IMAGEN --- */
-        header {
-            text-align: center;
-            background: var(--primary); 
-            color: white; 
-            padding: 15px 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            border-radius: 0 0 10px 10px; 
-        }
-        
-        h1 {
-            font-size: 1.2rem; 
-            font-weight: 500; 
-            color: white; 
-            text-transform: uppercase;
-        }
-
-        /* --- CONTENEDOR DE USUARIOS (El antiguo users-container, ahora solo para espaciado) --- */
-        .users-container {
-            /* Mantenemos el nombre pero solo para agrupar */
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center;
-            padding: 0 10px;
-        }
-        
-        /* --- TARJETAS DE REPORTE INDIVIDUALES --- */
-        .report-card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            margin: 10px 0;
-            padding: 15px 20px; 
-            width: 100%;
-            max-width: 400px; /* Tamaño máximo para mejor lectura en escritorio */
-        }
-
-        @media (min-width: 768px) {
-            .report-card {
-                margin: 10px; /* Espacio entre tarjetas en escritorio */
-            }
-        }
-        
-        .report-header {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary);
-            text-align: left;
-            margin-bottom: 10px;
-            border-bottom: 2px solid var(--bg-light); /* Separador sutil */
-            padding-bottom: 5px;
-        }
-        
-        .task-list {
-            list-style-type: none;
-        }
-        
-        .task-item {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6; /* Un fondo suave */
             display: flex;
-            align-items: center;
-            padding: 12px 0; 
-            border-bottom: 1px dashed rgba(0, 0, 0, 0.1); 
-        }
-        
-        .task-item:last-child { border-bottom: none; }
-
-        .task-completed .task-title {
-            text-decoration: line-through;
-            color: var(--complete);
-            opacity: 0.8;
-            font-weight: 400;
-        }
-        
-        /* CHECKBOX */
-        .task-checkbox {
-            margin-right: 15px;
-            width: 22px; 
-            height: 22px;
-            cursor: pointer;
-            position: relative;
-            appearance: none;
-            border: 2px solid var(--text-light); 
-            border-radius: 4px; 
-            transition: all 0.2s ease-in-out; 
-            flex-shrink: 0;
-            background-color: var(--card-bg); 
-        }
-        
-        .task-checkbox:checked {
-            background-color: var(--complete); 
-            border-color: var(--complete); 
-        }
-        
-        .task-checkbox:checked::after {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white; 
-            font-size: 14px; 
-        }
-        
-        .task-text-container {
-            flex: 1;
-            display: flex; 
-            flex-direction: column; 
-            cursor: pointer;
-            line-height: 1.2;
+            justify-content: center; /* Centra horizontalmente */
+            align-items: center; /* Centra verticalmente */
+            min-height: 100vh; /* Ocupa toda la altura de la ventana */
+            margin: 0;
         }
 
-        .task-title {
-            font-size: 1.0rem;
-            color: var(--text-dark);
-            font-weight: 500; 
-            text-transform: capitalize; 
-        }
-
-        .delete-task-btn {
-            color: #d9534f; 
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 5px;
-            transition: transform 0.2s;
-            margin-left: 10px;
-        }
-
-        .delete-task-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* --- ESTILOS DE PIE DE PÁGINA SIMPLIFICADO --- */
-        footer {
+        .welcome-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
             text-align: center;
-            margin-top: 20px;
-            color: var(--text-light);
-            font-size: 0.8rem;
-            padding: 10px;
-        }
-        
-        /* Ocultar elementos que no se quieren mostrar (botones, progreso, etc.) */
-        .stats, .action-buttons, .subtitle, .sync-time, .progress-container, .user-name-title {
-            display: none !important;
+            max-width: 450px;
+            width: 90%;
         }
 
+        h1 {
+            color: #333333;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #666666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        #startButton {
+            background-color: #007bff; /* Color azul primario */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px #0056b3; /* Sombra para efecto 3D */
+        }
+
+        #startButton:hover {
+            background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+        }
+
+        #startButton:active {
+            background-color: #004085;
+            box-shadow: 0 2px #004085; /* Reduce la sombra para el efecto de "presionado" */
+            transform: translateY(2px); /* Mueve el botón ligeramente hacia abajo */
+        }
     </style>
 </head>
 <body>
-    
-    <div class="container">
-        <header>
-            <h1>REPORTES DE TAREAS</h1>
-        </header>
-        
-        <div class="users-container">
-            <div class="report-card" id="card-henry">
-                <h2 class="report-header">Henry</h2>
-                <ul class="task-list" id="tasks-henry">
-                    </ul>
-            </div>
-            
-            <div class="report-card" id="card-carlos">
-                <h2 class="report-header">Carlos</h2>
-                <ul class="task-list" id="tasks-carlos">
-                    </ul>
-            </div>
-            
-            <div class="report-card" id="card-ammy">
-                <h2 class="report-header">Ammy</h2>
-                <ul class="task-list" id="tasks-ammy">
-                    </ul>
-            </div>
-        </div>
-        
-        <footer>
-            <p>©MrHenryYT (Sincronizado con Firebase RTDB)</p>
-        </footer>
+    <div class="welcome-container">
+        <h1>¡Hola! 👋 Te Damos la Bienvenida</h1>
+        <p>Presiona el botón para comenzar y explorar el contenido.</p>
+        <button id="startButton">INICIAR</button>
     </div>
-
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
     <script>
-        // La configuración de Firebase se mantiene igual
-        const FIREBASE_CONFIG = {
-            apiKey: "AIzaSyBcdWMdR_xVCFFQQPcTGPhbw8DYykN4qUg", 
-            authDomain: "app-de-tareas-80324.firebaseapp.com",
-            projectId: "app-de-tareas-80324",
-            storageBucket: "app-de-tareas-80324.firebasestorage.app",
-            messagingSenderId: "166776767275",
-            appId: "1:166776767275:web:a581ec25fc4c05063f3b6e",
-            databaseURL: "https://app-de-tareas-80324-default-rtdb.firebaseio.com"
-        };
-        
-        const app = firebase.initializeApp(FIREBASE_CONFIG);
-        const database = app.database();
-        const SYNC_REF = database.ref('estado_global'); 
-        
-        let isSyncingFromFirebase = false; 
-
-        // --- TAREAS ORIGINALES (Mantenidas) ---
-        // ESTA ES LA ESTRUCTURA QUE MAPEA TU BASE DE DATOS
-        const tareasHenry = [
-            "Baño", "Comedor", "Site", "Luces", "Perfilería", "Puntos de red", "Computadoras"
-        ];
-        
-        const tareasCarlos = [
-            "Lokers", "Archivos", "Luz corredor", "Luz de Emergencia", "Columnas", "Bodega de motos"
-        ];
-
-        const tareasAmmy = [
-            "fachada", "Techo", "Puertas y Chapas", "Parqueo", "Pintura Gris", "Lienzo Azteca", "Pintura General", "Recorrido Virtual"
-        ];
-        
-        // Estructura de usuarios con sus tareas (Mantenida)
-        const usuarios = [
-            { nombre: "Henry", tareas: tareasHenry, listaId: "tasks-henry" },
-            { nombre: "Carlos", tareas: tareasCarlos, listaId: "tasks-carlos" }, 
-            { nombre: "Ammy", tareas: tareasAmmy, listaId: "tasks-ammy" } 
-        ];
-
-        // --- Funciones de Sincronización (No cambian respecto a tu código original) ---
-
-        // Función para guardar el estado de las tareas de los 3 usuarios en Firebase
-        async function guardarEstado() {
-            if (isSyncingFromFirebase) return;
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Obtiene el elemento del botón usando su ID
+            const startButton = document.getElementById('startButton');
             
-            const estado = {};
-            
-            usuarios.forEach(user => {
-                const lista = document.getElementById(user.listaId);
-                if (lista) {
-                    const tareasEstado = [];
-                    lista.querySelectorAll('.task-checkbox').forEach(checkbox => {
-                        tareasEstado.push(checkbox.checked);
-                    });
-                    estado[user.nombre] = tareasEstado;
-                }
-            });
-            
-            try {
-                await SYNC_REF.update({ 
-                    taskAssignmentState: estado, // Mantenemos el nombre de tu nodo original
-                    lastUpdated: new Date().toISOString()
-                });
-                console.log("Sincronización de Datos Exitosa.");
-            } catch (error) {
-                console.error("Error al guardar estado en Firebase RTDB:", error);
-            }
-        }
-        
-        // Función para cargar el estado de las tareas de los 3 usuarios desde Firebase
-        async function cargarEstado() {
-            isSyncingFromFirebase = true; 
-            
-            try {
-                const snapshot = await SYNC_REF.once('value');
-                const data = snapshot.val();
-                const estado = data && data.taskAssignmentState ? data.taskAssignmentState : {};
-                
-                usuarios.forEach(user => {
-                    const lista = document.getElementById(user.listaId);
-                    if (lista && estado[user.nombre]) {
-                        const tareasEstado = estado[user.nombre];
-                        
-                        lista.querySelectorAll('.task-item').forEach((item, index) => {
-                            const checkbox = item.querySelector('.task-checkbox');
-                            if (checkbox && index < tareasEstado.length) {
-                                const isChecked = tareasEstado[index] === true;
-                                checkbox.checked = isChecked;
-                                
-                                if (isChecked) {
-                                    item.classList.add('task-completed');
-                                } else {
-                                    item.classList.remove('task-completed');
-                                }
-                            }
-                        });
-                    }
-                });
+            // 2. Define la URL de destino
+            const targetUrl = "https://henrychansanchez21-glitch.github.io/Trabajo/";
 
-            } catch (error) {
-                console.error("Error al cargar estado desde Firebase RTDB:", error);
-            } finally {
-                isSyncingFromFirebase = false; 
-            }
-        }
-
-        // --- FUNCIONES de UI y Lógica ---
-
-        // Crea la lista de tareas para un usuario específico
-        function crearListaReporteUsuario(user, cargarEstadoFirebase = true) {
-            const taskList = document.getElementById(user.listaId);
-            taskList.innerHTML = '';
-            
-            user.tareas.forEach((tarea, index) => {
-                const taskItem = document.createElement('li');
-                taskItem.className = 'task-item';
-                
-                const taskCheckbox = document.createElement('input');
-                taskCheckbox.type = 'checkbox';
-                taskCheckbox.className = 'task-checkbox';
-
-                // Listener para los cambios de completado
-                taskCheckbox.addEventListener('change', function() {
-                    guardarEstado(); // Guarda el estado de TODOS al cambiar uno
-                    
-                    if (this.checked) {
-                        taskItem.classList.add('task-completed');
-                    } else {
-                        taskItem.classList.remove('task-completed');
-                    }
-                });
-                
-                const textContainer = document.createElement('div');
-                textContainer.className = 'task-text-container';
-                
-                const taskTitle = document.createElement('span');
-                taskTitle.className = 'task-title';
-                taskTitle.textContent = tarea;
-                
-                textContainer.appendChild(taskTitle);
-                
-                // Hace que clickear el texto también marque el checkbox
-                textContainer.addEventListener('click', function() {
-                    taskCheckbox.checked = !taskCheckbox.checked;
-                    taskCheckbox.dispatchEvent(new Event('change')); 
-                });
-
-                // ÍCONO DE ELIMINAR (Cubo de basura)
-                const deleteIcon = document.createElement('i');
-                deleteIcon.className = 'fas fa-trash-alt delete-task-btn'; 
-                deleteIcon.title = `Eliminar la tarea '${tarea}' de ${user.nombre}`;
-
-                deleteIcon.addEventListener('click', function() {
-                    eliminarTareaDinamica(user.nombre, tarea);
-                });
-                
-                taskItem.appendChild(taskCheckbox);
-                taskItem.appendChild(textContainer); 
-                taskItem.appendChild(deleteIcon); 
-                taskList.appendChild(taskItem);
-            });
-            
-            if (!cargarEstadoFirebase) {
-                guardarEstado(); 
-            }
-        }
-        
-        function crearTodasLasListas() {
-            usuarios.forEach(user => crearListaReporteUsuario(user, true));
-            cargarEstado(); 
-        }
-
-        function eliminarTareaDinamica(userName, tareaAEliminar) {
-            if (!confirm(`¿Estás seguro de que quieres eliminar la tarea: "${tareaAEliminar}" de la lista de ${userName}?`)) {
-                return;
-            }
-            
-            const user = usuarios.find(u => u.nombre === userName);
-            if (!user) return;
-
-            const tareaIndex = user.tareas.findIndex(t => t.toLowerCase() === tareaAEliminar.toLowerCase());
-            
-            if (tareaIndex > -1) {
-                user.tareas.splice(tareaIndex, 1);
-                
-                // Regenerar la UI del usuario y guardar el nuevo estado sin recargar de Firebase
-                crearListaReporteUsuario(user, false); 
-
-                console.log(`Tarea '${tareaAEliminar}' eliminada de ${userName}.`);
-            } else {
-                console.error(`Error: La tarea no pudo ser encontrada para eliminación.`);
-            }
-        }
-
-        // --- EVENTOS PRINCIPALES ---
-        window.addEventListener('DOMContentLoaded', () => {
-            crearTodasLasListas(); 
-            
-            // Sincronización automática cada 30 segundos
-            setInterval(guardarEstado, 30000);
-            
-            // Listener de Firebase para actualizar en tiempo real
-            SYNC_REF.on('value', (snapshot) => {
-                 if (document.readyState === 'complete') {
-                     cargarEstado(); 
-                 }
+            // 3. Agrega un "escuchador de eventos" que espera un clic
+            startButton.addEventListener('click', function() {
+                // Redirige al usuario a la URL de destino
+                window.location.href = targetUrl;
             });
         });
-        
-        window.addEventListener('beforeunload', guardarEstado);
     </script>
 </body>
 </html>
