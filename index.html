@@ -3,82 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Bienvenido!</title>
+    <title>Acceso al Sistema - Innovador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7f6; /* Un fondo suave */
-            display: flex;
-            justify-content: center; /* Centra horizontalmente */
-            align-items: center; /* Centra verticalmente */
-            min-height: 100vh; /* Ocupa toda la altura de la ventana */
-            margin: 0;
+        /* 1. Fondo Animado Dinámico (Plasma/Wave Effect) */
+        @keyframes colorShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Degradado de fondo con gran tamaño para la animación */
+            background: linear-gradient(135deg, #1f005c, #5b0060, #870160, #ac255e, #ca485c, #e16b5c, #f39060, #ffb56b);
+            background-size: 400% 400%; /* Tamaño grande para animar */
+            animation: colorShift 20s ease infinite;
+            overflow: hidden;
+        }
+
+        /* 2. Contenedor con Efecto Glassmorphism (Cristal Esmerilado) */
         .welcome-container {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            /* Glassmorphism Effect */
+            background: rgba(255, 255, 255, 0.15); /* Fondo blanco semitransparente */
+            backdrop-filter: blur(10px); /* El corazón del Glassmorphism */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 50px 60px;
             text-align: center;
             max-width: 450px;
             width: 90%;
+            color: white;
+            z-index: 10;
         }
 
         h1 {
-            color: #333333;
-            margin-bottom: 15px;
+            font-weight: 800;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra de texto para contraste */
         }
 
         p {
-            color: #666666;
-            margin-bottom: 30px;
             font-size: 1.1em;
+            margin-bottom: 40px;
+            font-weight: 400;
         }
 
+        /* 3. Botón 3D con Animación de Brillo */
         #startButton {
-            background-color: #007bff; /* Color azul primario */
-            color: white;
+            background: linear-gradient(45deg, #00C9FF 0%, #92FE9D 100%); /* Gradiente de Cían a Verde */
+            color: #1f005c; /* Color de texto oscuro para contraste */
             border: none;
-            padding: 12px 25px;
-            font-size: 1.2em;
-            font-weight: bold;
-            border-radius: 8px;
+            padding: 15px 45px;
+            font-size: 1.3em;
+            font-weight: 800;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-            box-shadow: 0 4px #0056b3; /* Sombra para efecto 3D */
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 201, 255, 0.4); /* Sombra de neón */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animación de Brillo (Shine Effect) */
+        #startButton::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            transition: all 0.5s ease;
+            transform: skewX(-20deg);
+        }
+
+        #startButton:hover::after {
+            left: 100%;
         }
 
         #startButton:hover {
-            background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0, 201, 255, 0.6);
         }
 
-        #startButton:active {
-            background-color: #004085;
-            box-shadow: 0 2px #004085; /* Reduce la sombra para el efecto de "presionado" */
-            transform: translateY(2px); /* Mueve el botón ligeramente hacia abajo */
+        /* 4. Preloader (Animación de Carga Inicial) */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1f005c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0s 0.5s;
+            z-index: 9999;
+        }
+
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #92FE9D;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loaded #preloader {
+            opacity: 0;
+            visibility: hidden;
         }
     </style>
 </head>
-<body>
+<body class="loading">
+    
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
     <div class="welcome-container">
-        <h1>¡Hola! 👋 Te Damos la Bienvenida</h1>
-        <p>Presiona el botón para comenzar y explorar el contenido.</p>
-        <button id="startButton">INICIAR</button>
+        <h1>¡RUTA GCC SANTA ELENA 🌐</h1>
+        <p>REALIZAR TRABAJOS EN SUS AREAS</p>
+        <button id="startButton">INICIAR RUTA</button>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 1. Obtiene el elemento del botón usando su ID
-            const startButton = document.getElementById('startButton');
+            // Lógica para ocultar el preloader después de un breve momento
+            setTimeout(function() {
+                document.body.classList.add('loaded');
+                document.getElementById('preloader').style.display = 'none'; // Oculta totalmente
+            }, 800); // 800ms de espera para mostrar el preloader
+
             
-            // 2. Define la URL de destino
+            // Lógica de Redirección
+            const startButton = document.getElementById('startButton');
             const targetUrl = "https://henrychansanchez21-glitch.github.io/Trabajo/";
 
-            // 3. Agrega un "escuchador de eventos" que espera un clic
             startButton.addEventListener('click', function() {
-                // Redirige al usuario a la URL de destino
+                // Puedes añadir una pequeña animación de salida aquí si quieres, 
+                // pero lo más simple es redirigir inmediatamente.
                 window.location.href = targetUrl;
             });
         });
