@@ -3,131 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso al Sistema - Innovador</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Acceso al Sistema - Neumorfismo Neón</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* 1. Fondo Animado Dinámico (Plasma/Wave Effect) */
-        @keyframes colorShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Nuevo Diseño: Neumorfismo Oscuro (Dark Neumorphism) y Neón */
+        :root {
+            --bg-dark: #2A2E33; /* Fondo principal oscuro */
+            --bg-light: #383c44; /* Color base para elementos */
+            --neon-color: #00F0FF; /* Color neón (Cyan brillante) */
+            --shadow-light: rgba(255, 255, 255, 0.05); /* Sombra clara interior/superior */
+            --shadow-dark: rgba(0, 0, 0, 0.4); /* Sombra oscura exterior/inferior */
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            /* Degradado de fondo con gran tamaño para la animación */
-            background: linear-gradient(135deg, #1f005c, #5b0060, #870160, #ac255e, #ca485c, #e16b5c, #f39060, #ffb56b);
-            background-size: 400% 400%; /* Tamaño grande para animar */
-            animation: colorShift 20s ease infinite;
+            background-color: var(--bg-dark);
+            color: white;
             overflow: hidden;
+            transition: background-color 0.5s;
         }
 
-        /* 2. Contenedor con Efecto Glassmorphism (Cristal Esmerilado) */
+        /* 1. Contenedor con Efecto Neumorfismo Principal */
         .welcome-container {
-            /* Glassmorphism Effect */
-            background: rgba(255, 255, 255, 0.15); /* Fondo blanco semitransparente */
-            backdrop-filter: blur(10px); /* El corazón del Glassmorphism */
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            background: var(--bg-light);
+            border-radius: 30px;
+            /* Sombra de Neumorfismo (dos sombras opuestas) */
+            box-shadow: 10px 10px 20px var(--shadow-dark), 
+                        -5px -5px 15px var(--shadow-light);
             padding: 50px 60px;
             text-align: center;
             max-width: 450px;
             width: 90%;
-            color: white;
             z-index: 10;
+            transition: all 0.5s ease;
         }
 
+        /* 2. Texto con Efecto Neón y Animación de Parpadeo (Flicker) */
+        @keyframes neonFlicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 4px var(--neon-color), 
+                             0 0 10px var(--neon-color), 
+                             0 0 20px var(--neon-color);
+                opacity: 1;
+            }
+            20%, 24%, 55% {        
+                text-shadow: none;
+                opacity: 0.8;
+            }
+        }
+        
         h1 {
-            font-weight: 800;
-            font-size: 2.5em;
+            font-weight: 900;
+            font-size: 2.8em;
             margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra de texto para contraste */
+            color: var(--neon-color);
+            animation: neonFlicker 2s infinite alternate ease-in-out;
         }
 
         p {
             font-size: 1.1em;
             margin-bottom: 40px;
             font-weight: 400;
+            color: #ccc; /* Gris claro */
+            letter-spacing: 0.5px;
         }
 
-        /* 3. Botón 3D con Animación de Brillo */
+        /* 3. Botón Neumórfico con Animación de Presión */
         #startButton {
-            background: linear-gradient(45deg, #00C9FF 0%, #92FE9D 100%); /* Gradiente de Cían a Verde */
-            color: #1f005c; /* Color de texto oscuro para contraste */
+            background: var(--bg-light);
+            color: var(--neon-color); 
             border: none;
             padding: 15px 45px;
             font-size: 1.3em;
-            font-weight: 800;
-            border-radius: 50px;
+            font-weight: 700;
+            border-radius: 40px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 201, 255, 0.4); /* Sombra de neón */
-            position: relative;
-            overflow: hidden;
+            outline: none;
+            transition: all 0.2s ease;
+            /* Neumorfismo del botón */
+            box-shadow: 5px 5px 10px var(--shadow-dark), 
+                        -3px -3px 8px var(--shadow-light);
+            
+            /* Efecto Neón sutil en el texto del botón */
+            text-shadow: 0 0 5px var(--neon-color);
         }
 
-        /* Animación de Brillo (Shine Effect) */
-        #startButton::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.4);
-            transition: all 0.5s ease;
-            transform: skewX(-20deg);
-        }
-
-        #startButton:hover::after {
-            left: 100%;
-        }
-
+        /* Animación de "Presión" del Neumorfismo */
         #startButton:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(0, 201, 255, 0.6);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 8px 8px 15px var(--shadow-dark), 
+                        -5px -5px 12px var(--shadow-light);
         }
 
-        /* 4. Preloader (Animación de Carga Inicial) */
+        #startButton:active {
+            /* Simula ser presionado, hundiendo el botón */
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), 
+                        inset -3px -3px 6px var(--shadow-light);
+            transform: translateY(2px);
+            color: var(--neon-color);
+        }
+        
+        /* 4. Preloader (Animación de Carga - Onda Creciente) */
         #preloader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #1f005c;
+            background: var(--bg-dark);
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.5s ease, visibility 0s 0.5s;
+            transition: opacity 0.6s ease;
             z-index: 9999;
         }
 
         .loader {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #92FE9D;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+            width: 60px;
+            height: 60px;
+            position: relative;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .loader:before, .loader:after {
+            content: '';
+            position: absolute;
+            border: 4px solid var(--neon-color);
+            border-radius: 50%;
+            opacity: 0;
+            animation: pulse 1.5s ease-out infinite;
+        }
+
+        .loader:after {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0; }
         }
 
         .loaded #preloader {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none; /* Deshabilita interacciones después de cargar */
         }
+
     </style>
 </head>
 <body class="loading">
@@ -137,18 +164,17 @@
     </div>
 
     <div class="welcome-container">
-        <h1>¡RUTA GCC SANTA ELENA 🌐</h1>
-        <p>REALIZAR TRABAJOS EN SUS AREAS</p>
+        <h1>EKT POPTUN🌐</h1>
+        <p>Hagan todo par de huevones</p>
         <button id="startButton">INICIAR RUTA</button>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Lógica para ocultar el preloader después de un breve momento
+            // Lógica para ocultar el preloader
             setTimeout(function() {
                 document.body.classList.add('loaded');
-                document.getElementById('preloader').style.display = 'none'; // Oculta totalmente
-            }, 800); // 800ms de espera para mostrar el preloader
+            }, 800); // Mantiene el preloader por 800ms
 
             
             // Lógica de Redirección
@@ -156,9 +182,10 @@
             const targetUrl = "https://henrychansanchez21-glitch.github.io/Trabajo/";
 
             startButton.addEventListener('click', function() {
-                // Puedes añadir una pequeña animación de salida aquí si quieres, 
-                // pero lo más simple es redirigir inmediatamente.
-                window.location.href = targetUrl;
+                // Pequeño delay para que la animación :active del botón se vea
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 100); 
             });
         });
     </script>
